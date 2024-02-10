@@ -1,38 +1,174 @@
-.App {
-  text-align: center;
+.cards {
+	display: flex;
+	width: 40%;
+	justify-content: space-between;
+	height: 40px;
+	text-decoration: none;
+	padding: 7px;
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.balance {
+	margin-right: 20px;
+	font-weight: bold;
+	padding: 15px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.navbar {
+	display: flex;
+	width: 100%;
+	padding: 4px;
+	justify-content: space-between;
+	background-color: rgb(171, 231, 231);
+    font-family: "Arvo", serif;
+	font-size: 20px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	height: 60px;
+	text-decoration: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.card {
+	text-decoration: none;
+	margin-top: 10px;
+	color: rgb(35, 36, 37);
+	font-weight: bold;
 }
 
-.App-link {
-  color: #61dafb;
+.card:hover {
+	font-size: 21px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 3px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.transactions {
+
+	padding: 40px;
+}
+
+.transaction {
+	border: solid black 0px;
+	padding: 15px;
+	width: 40%;
+	margin-left: 19px;
+	margin-top: 14px;
+	border-radius: 6px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.leftContent {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 16px;
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: 20px;
+}
+.rightContent {
+	display: flex;
+	justify-content: space-between;
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: 20px;
+}
+
+.btn {
+	font-size: 15px;
+	border-radius: 3px;
+	padding: 4px;
+}
+
+.transactionCategory {
+	background-color: rgb(239, 234, 226);
+	border-radius: 5px;
+	padding: 7px;
+}
+
+.transactionVendor {
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: aquamarine;
+	padding: 6px;
+}
+
+.breakdown {
+	width: 35%;
+	height: 270px;
+	border: solid black 0px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin: 45px;
+	padding: 45px;
+	font-weight: bold;
+	font-size: 30px;
+	max-height: fit-content;
+}
+
+.breakdownCategory {
+	margin-top: 20px;
+	font-size: 25px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	height: 38px;
+	font-weight: normal;
+	padding: 15px;
+}
+
+.operations {
+    font-family: "Arvo", serif;
+	width: 50%;
+	border: solid black 0px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin: 45px;
+	padding: 40px;
+	font-weight: bold;
+	font-size: 28px;
+}
+
+input {
+	display: block;
+	width: 70%;
+	height: 40px;
+	margin: 30px;
+	border-radius: 7px;
+}
+
+.operationsBtns {
+	display: flex;
+	justify-content: space-around;
+	width: 70%;
+}
+
+.operationsBtn {
+	background-color: rgb(111, 84, 50);
+	color: rgb(25, 40, 40);
+}
+
+.red {
+	color: red;
+}
+
+.green {
+	color: green;
+}
+
+.Deposit {
+	background-color: rgb(99, 186, 99);
+	color: rgb(255, 255, 255);
+	padding: 8px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.Withdraw {
+	background-color: rgb(211, 83, 83);
+	color: rgb(255, 255, 255);
+	padding: 8px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.Delete {
+	background-color: rgb(211, 83, 83);
+	color: rgb(255, 255, 255);
+	padding: 8px;
+	font-size: 16px;
+	font-weight: bold;
 }
