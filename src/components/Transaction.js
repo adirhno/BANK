@@ -4,7 +4,6 @@ import axios from "axios";
 
 export default function Transaction({ transaction, fetchData }) {
 	
-	
 	const handleDeleteTransaction= async (id) =>{
 		 await axios.get(`http://localhost:3001/transaction/${id}`).then(()=>fetchData())
 	}
@@ -16,8 +15,9 @@ export default function Transaction({ transaction, fetchData }) {
 			</div>
 			<div className="rightContent">
 			<span className="transactionCategory">{transaction.category}</span>
-			<Button className='deleteBtn' transaction={transaction} handleDeleteTransaction={handleDeleteTransaction} name={'Delete'}></Button>
+			<Button className='deleteBtn' transaction={transaction} handleDeleteTransaction={handleDeleteTransaction} action={'Delete'}></Button>
 			</div>
+			<div className="transactionDate"> {transaction.createdAt}</div>
 		</div>
 	);
 }

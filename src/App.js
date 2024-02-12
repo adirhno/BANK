@@ -6,6 +6,10 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Operations from "./components/Operations";
 import Breakdown from "./components/Breakdown";
+import React from 'react';
+
+
+
 
 
 function App() {
@@ -37,6 +41,7 @@ function App() {
 
 	return <div className="App">
    <Navbar balance={balance} />
+ 
     <Routes>
     <Route path='/' element={<Transactions fetchData={fetchData} transactions={data} />} />
     <Route path='/operations' element={ <Operations balance={balance} fetchData={fetchData} setBalance={setBalance} />} />

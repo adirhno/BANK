@@ -26,17 +26,12 @@ router.get("/transaction/:id", function (req, res) {
 
 router.get("/breakdown", async function (req, res) {
 	let categoriesObj = {};
-
 	let categoriesArr = [];
-	await Transaction.find({})
-		.then((transactions) => {
-			transactions.map((t) => (categoriesObj[t.category] = t.category));
-		})
-		.then(async () => {
-			for (let i of Object.keys(categoriesObj)) {
+	await Transaction.find({}).then((transactions) => {
+			transactions.map((t) => (categoriesObj[t.category] = t.category));}).then(async () => {
+				for (let i of Object.keys(categoriesObj)) {
 				let temCategory = {};
-				await Transaction.find({ category: categoriesObj[i] }).then(
-					(result) => {
+				await Transaction.find({ category: categoriesObj[i] }).then((result) => {
 						temCategory["name"] = categoriesObj[i] 
 						temCategory["sum"] = calculateCategoryAmount(result)
 						categoriesArr.push(temCategory);
