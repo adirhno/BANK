@@ -6,10 +6,7 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Operations from "./components/Operations";
 import Breakdown from "./components/Breakdown";
-import React from 'react';
-
-
-
+import {getSum, breakdown, getAllTransactions} from './apiManager'
 
 
 function App() {
@@ -18,19 +15,19 @@ function App() {
 	const [balance, setBalance] = useState(0);
 
 	const initBalance = function () {
-		axios.get("http://localhost:3001/sum").then((results) => {
+		getSum().then((results) => {
 			setBalance(results.data.sum);
 		});
 	};
 
 	const fetchCategoriesSum = function () {
-		axios.get("http://localhost:3001/breakdown").then((results) => {
+		breakdown().then((results) => {
 			setCategoriesSum(results.data);
 		});
 	};
 
 	const fetchData = function () {
-		axios.get("http://localhost:3001/").then((data) => {
+		getAllTransactions().then((data) => {
 			setData(data.data.transactions);
 		});
 	};

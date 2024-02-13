@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Button from "./Button";
-import axios from "axios";
+import {deleteTransaction} from '../apiManager'
 
 export default function Transaction({ transaction, fetchData }) {
-	
+
 	const handleDeleteTransaction= async (id) =>{
-		 await axios.get(`http://localhost:3001/transaction/${id}`).then(()=>fetchData())
+		 await deleteTransaction(id).then(()=>fetchData())
 	}
 	return (
 		<div className="transaction">
