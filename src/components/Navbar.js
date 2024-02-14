@@ -5,7 +5,7 @@ export default function Navbar({ balance}) {
   return (
   <div className='navbar'>
     <span className='cards'>
-    <Link className='card' to={'/'} >
+    <Link className='card' to={'/transactions'} >
     <div>
     TRANSACTIONS
     </div>

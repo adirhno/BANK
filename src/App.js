@@ -36,9 +36,9 @@ function App() {
 	useEffect(() => fetchData(), []);
 
 	return 	<div className="App">
-   <Navbar balance={balance} />
+    <Navbar balance={balance} />
     <Routes>
-    <Route path='/' element={<Transactions setData={setData} fetchData={fetchData} transactions={data} />} />
+    <Route path='/transactions' element={<Transactions setData={setData} fetchData={fetchData} transactions={data} />} />
     <Route path='/operations' element={ <Operations balance={balance} fetchData={fetchData} setBalance={setBalance} />} />
     <Route path='/breakdown' element={<Breakdown setCategoriesSum={setCategoriesSum} categoriesSum={categoriesSum} />} />
     </Routes>

@@ -21,4 +21,8 @@ const deleteTransaction= function (transactionId){
     return axios.get(`http://localhost:3001/transaction/${transactionId}`)
 }
 
-export {getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction}
+const createUser = (user) =>{
+   return axios.post(`${API}/signup`,user)
+}
+
+export {getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction, createUser}
