@@ -6,9 +6,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Operations from "./components/Operations";
 import Breakdown from "./components/Breakdown";
 import {getBalance, breakdown, getAllTransactions} from './apiManager'
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-
 
 
 function App() {
@@ -38,8 +35,7 @@ function App() {
 	useEffect(() => initBalance(), [categoriesSum]);
 	useEffect(() => fetchData(), []);
 
-	return <LocalizationProvider dateAdapter={AdapterDayjs}>
-	<div className="App">
+	return 	<div className="App">
    <Navbar balance={balance} />
     <Routes>
     <Route path='/' element={<Transactions setData={setData} fetchData={fetchData} transactions={data} />} />
@@ -47,7 +43,6 @@ function App() {
     <Route path='/breakdown' element={<Breakdown setCategoriesSum={setCategoriesSum} categoriesSum={categoriesSum} />} />
     </Routes>
 	</div>;
-	</LocalizationProvider> 
 }
 
 export default App;
