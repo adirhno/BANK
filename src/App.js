@@ -1,12 +1,14 @@
 import "./App.css";
 import Transactions from "./components/Transactions";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Operations from "./components/Operations";
 import Breakdown from "./components/Breakdown";
-import {getSum, breakdown, getAllTransactions} from './apiManager'
+import {getBalance, breakdown, getAllTransactions} from './apiManager'
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+
 
 
 function App() {
@@ -15,7 +17,7 @@ function App() {
 	const [balance, setBalance] = useState(0);
 
 	const initBalance = function () {
-		getSum().then((results) => {
+		getBalance().then((results) => {
 			setBalance(results.data.sum);
 		});
 	};
@@ -34,16 +36,18 @@ function App() {
 
 	useEffect(() => fetchCategoriesSum(), [data]);
 	useEffect(() => initBalance(), [categoriesSum]);
-	useEffect(() => fetchData(), [balance]);
+	useEffect(() => fetchData(), []);
 
-	return <div className="App">
+	return <LocalizationProvider dateAdapter={AdapterDayjs}>
+	<div className="App">
    <Navbar balance={balance} />
- 
     <Routes>
-    <Route path='/' element={<Transactions fetchData={fetchData} transactions={data} />} />
+    <Route path='/' element={<Transactions setData={setData} fetchData={fetchData} transactions={data} />} />
     <Route path='/operations' element={ <Operations balance={balance} fetchData={fetchData} setBalance={setBalance} />} />
-    <Route path='/breakdown' element={<Breakdown categoriesSum={categoriesSum} />} />
-    </Routes></div>;
+    <Route path='/breakdown' element={<Breakdown setCategoriesSum={setCategoriesSum} categoriesSum={categoriesSum} />} />
+    </Routes>
+	</div>;
+	</LocalizationProvider> 
 }
 
 export default App;

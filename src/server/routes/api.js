@@ -12,9 +12,26 @@ router.get("/", async function (req, res) {
 
 router.post("/transaction", function (req, res) {
 	let transacion = req.body;
-	const t1 = new Transaction(transacion);
+	let balance = req.body.balance;
+	let amount = transacion.newTransaction.amount;
+	let newBalance = balance;
+	
+	if (transacion.action === "Withdraw") {
+		if (balance - amount >= 500) {
+			newBalance -= amount;
+			transacion.newTransaction["amount"] = amount * -1;
+		} else {
+			res.send({ err: "low balance" });
+			return
+		}
+	} else {
+		newBalance += amount;
+	}
+	const t1 = new Transaction(transacion.newTransaction);
 	t1.save();
-	res.send("transaction added!");
+	res.send({ newBalance: newBalance });
+
+	
 });
 
 router.get("/transaction/:id", function (req, res) {
@@ -24,25 +41,41 @@ router.get("/transaction/:id", function (req, res) {
 	res.send("transaction deleted succeffuly");
 });
 
+
+router.post('/breakdown', function(req,res){
+	let date=req.body
+	console.log(date)
+		Transaction.find({  createdAt: {
+    $gte: date.start,
+    $lte: date.end
+  }}).then((transactions)=>res.send(transactions))
+
+})
 router.get("/breakdown", async function (req, res) {
-	let categoriesObj = {};
+	
+		let categoriesObj = {};
 	let categoriesArr = [];
-	await Transaction.find({}).then((transactions) => {
-			transactions.map((t) => (categoriesObj[t.category] = t.category));}).then(async () => {
-				for (let i of Object.keys(categoriesObj)) {
+	await Transaction.find({})
+		.then((transactions) => {
+			transactions.map((t) => (categoriesObj[t.category] = t.category));
+		})
+		.then(async () => {
+			for (let i of Object.keys(categoriesObj)) {
 				let temCategory = {};
-				await Transaction.find({ category: categoriesObj[i] }).then((result) => {
-						temCategory["name"] = categoriesObj[i] 
-						temCategory["sum"] = calculateCategoryAmount(result)
+				await Transaction.find({ category: categoriesObj[i] }).then(
+					(result) => {
+						temCategory["name"] = categoriesObj[i];
+						temCategory["sum"] = calculateCategoryAmount(result);
 						categoriesArr.push(temCategory);
 					}
 				);
 			}
 			res.send(categoriesArr);
 		});
+	
 });
 
-router.get("/sum", function (req, res) {
+router.get("/balance", function (req, res) {
 	Transaction.find({}).then((data) => {
 		let allCategories = data;
 		let sum = 0;
