@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Transaction = require("../models/Transaction");
+const User = require("../models/User");
 const axios = require("axios");
 const { calculateCategoryAmount } = require("../config");
 
@@ -15,14 +16,14 @@ router.post("/transaction", function (req, res) {
 	let balance = req.body.balance;
 	let amount = transacion.newTransaction.amount;
 	let newBalance = balance;
-	
+
 	if (transacion.action === "Withdraw") {
 		if (balance - amount >= 500) {
 			newBalance -= amount;
 			transacion.newTransaction["amount"] = amount * -1;
 		} else {
 			res.send({ err: "low balance" });
-			return
+			return;
 		}
 	} else {
 		newBalance += amount;
@@ -30,8 +31,6 @@ router.post("/transaction", function (req, res) {
 	const t1 = new Transaction(transacion.newTransaction);
 	t1.save();
 	res.send({ newBalance: newBalance });
-
-	
 });
 
 router.get("/transaction/:id", function (req, res) {
@@ -41,19 +40,18 @@ router.get("/transaction/:id", function (req, res) {
 	res.send("transaction deleted succeffuly");
 });
 
-
-router.post('/breakdown', function(req,res){
-	let date=req.body
-	console.log(date)
-		Transaction.find({  createdAt: {
-    $gte: date.start,
-    $lte: date.end
-  }}).then((transactions)=>res.send(transactions))
-
-})
+router.post("/breakdown", function (req, res) {
+	let date = req.body;
+	console.log(date);
+	Transaction.find({
+		createdAt: {
+			$gte: date.start,
+			$lte: date.end,
+		},
+	}).then((transactions) => res.send(transactions));
+});
 router.get("/breakdown", async function (req, res) {
-	
-		let categoriesObj = {};
+	let categoriesObj = {};
 	let categoriesArr = [];
 	await Transaction.find({})
 		.then((transactions) => {
@@ -72,7 +70,6 @@ router.get("/breakdown", async function (req, res) {
 			}
 			res.send(categoriesArr);
 		});
-	
 });
 
 router.get("/balance", function (req, res) {
@@ -82,5 +79,18 @@ router.get("/balance", function (req, res) {
 		allCategories.map((c) => (sum += c.amount));
 		res.send({ sum: sum });
 	});
+});
+
+router.post("/signup", function (req, res) {
+	let userDetails = req.body;
+	let u1 = new User(userDetails);
+	u1.save();
+	res.send("user added!")
+});
+
+router.post("/user", function (req, res) {
+	let user = req.body;
+	console.log(user)
+	User.find({ userName: user.username },{password:user.password}).then((e) => {if(e.length>0){res.send({msg:"success"})}else{res.send({msg:"denied"})}});
 });
 module.exports = router;
