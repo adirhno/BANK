@@ -4,18 +4,30 @@ const Transaction = require("../models/Transaction");
 const User = require("../models/User");
 const axios = require("axios");
 const { calculateCategoryAmount } = require("../config");
+const { isValidObjectId } = require("mongoose");
+const ObjectId = require('mongodb').ObjectId; 
+
+router.get('/usert/:user',async function(req,res){
+
+
+	const user=await User.findOne({userName:`${req.params.user}`}).select('transactions').populate('transactions')
+
+	console.log('yser',user)
+	res.send(user.transactions)
+
+})
 
 router.get("/", async function (req, res) {
-	Transaction.find({})
-		.exec()
-		.then((transactions) => res.send({ transactions }));
-});
 
-router.post("/transaction", function (req, res) {
+})
+
+router.post("/transactions", function (req, res) {
 	let transacion = req.body;
 	let balance = req.body.balance;
 	let amount = transacion.newTransaction.amount;
-	let newBalance = balance;
+	let newBalance = balance;	
+
+	console.log("transaction from server  ",transacion)
 
 	if (transacion.action === "Withdraw") {
 		if (balance - amount >= 500) {
@@ -28,14 +40,19 @@ router.post("/transaction", function (req, res) {
 	} else {
 		newBalance += amount;
 	}
-	const t1 = new Transaction(transacion.newTransaction);
-	t1.save();
+
+	const newTransaciona= new Transaction(transacion.newTransaction)
+	newTransaciona.save()
+
+	User.findOneAndUpdate({userName:req.body.currUser.userName },{$push:{transactions:newTransaciona}}).then((e)=>console.log("oushed",e))
+	
+	
 	res.send({ newBalance: newBalance });
 });
 
-router.get("/transaction/:id", function (req, res) {
+router.get("/transactions/:id", function (req, res) {
 	let transacionId = req.params.id;
-	console.log(transacionId);
+	
 	Transaction.findByIdAndDelete(transacionId).exec();
 	res.send("transaction deleted succeffuly");
 });
@@ -72,25 +89,29 @@ router.get("/breakdown", async function (req, res) {
 		});
 });
 
-router.get("/balance", function (req, res) {
-	Transaction.find({}).then((data) => {
-		let allCategories = data;
+router.get("/balance/:user",async function (req, res) {
+	console.log("from balance user", req.params.user)
+	const balance =await User.findOne({userName:req.params.user}).select('transactions').populate('transactions')
+
+		let allCategories = balance.transactions;
+		console.log("from balance", allCategories)
 		let sum = 0;
 		allCategories.map((c) => (sum += c.amount));
 		res.send({ sum: sum });
-	});
 });
 
 router.post("/signup", function (req, res) {
 	let userDetails = req.body;
+	userDetails["transactions"]=[]
+	userDetails["balance"] = 0
 	let u1 = new User(userDetails);
 	u1.save();
-	res.send("user added!")
+	res.sendStatus(200)
 });
 
-router.post("/user", function (req, res) {
+router.post("/users", function (req, res) {
 	let user = req.body;
 	console.log(user)
-	User.find({ userName: user.username },{password:user.password}).then((e) => {if(e.length>0){res.send({msg:"success"})}else{res.send({msg:"denied"})}});
+	User.find({ userName: user.userName }).then((data)=>{data.length>0? (data[0].password == user.password? res.send({status:200,id:data[0]._id}):res.sendStatus(401)):res.sendStatus(401)});
 });
 module.exports = router;
