@@ -6,15 +6,17 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Operations from "./components/Operations";
 import Breakdown from "./components/Breakdown";
 import {getBalance, breakdown, getAllTransactions} from './apiManager'
+import Landing from "./components/Landing";
 
 
 function App() {
 	const [data, setData] = useState([]);
 	const [categoriesSum, setCategoriesSum] = useState({});
 	const [balance, setBalance] = useState(0);
+	const [currUser, setCurrUser] = useState(false)
 
-	const initBalance = function () {
-		getBalance().then((results) => {
+	const initBalance = function (userName) {
+		getBalance(userName).then((results) => {
 			setBalance(results.data.sum);
 		});
 	};
@@ -25,23 +27,28 @@ function App() {
 		});
 	};
 
-	const fetchData = function () {
-		getAllTransactions().then((data) => {
-			setData(data.data.transactions);
+	const fetchData = function (user) {
+		console.log("from get all transactions",user)
+			getAllTransactions(user).then((data) => {
+			console.log("its the data", data)
+			setData(data.data);
+			initBalance(user)
 		});
+		
 	};
 
 	useEffect(() => fetchCategoriesSum(), [data]);
-	useEffect(() => initBalance(), [categoriesSum]);
-	useEffect(() => fetchData(), []);
+	
+	
 
 	return 	<div className="App">
-   <Navbar balance={balance} />
-    <Routes>
-    <Route path='/' element={<Transactions setData={setData} fetchData={fetchData} transactions={data} />} />
-    <Route path='/operations' element={ <Operations balance={balance} fetchData={fetchData} setBalance={setBalance} />} />
+   {currUser ? <Navbar userName={currUser.userName} balance={balance} />:<Navbar balance={balance} />}
+   {currUser?    <Routes>
+    <Route path='/' element={<Transactions currUser={currUser} setData={setData} fetchData={fetchData} transactions={data} />} />
+    <Route path='/operations' element={ <Operations currUser={currUser} balance={balance} fetchData={fetchData} setBalance={setBalance} />} />
     <Route path='/breakdown' element={<Breakdown setCategoriesSum={setCategoriesSum} categoriesSum={categoriesSum} />} />
-    </Routes>
+    </Routes>  : <Landing initBalance={initBalance} fetchData={fetchData} setCurrUser={setCurrUser}/>}
+  
 	</div>;
 }
 

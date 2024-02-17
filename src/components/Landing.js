@@ -1,0 +1,42 @@
+import React, { useState } from "react";
+import { API } from "../server/config";
+import axios from "axios";
+
+export default function Landing({ setCurrUser, fetchData, initBalance }) {
+	const [userName, setUserName] = useState("");
+	const [password, setPassword] = useState("");
+
+	const signUp = () => {
+		axios.post(`${API}/signup`, { userName, password }).then((data) => {
+			data.status === 200
+				? setCurrUser({ userName, password, id:data.data.id })
+				: console.log(data);
+		});
+	};
+
+	const signIn = () => {
+		axios.post(`${API}/users`, { userName, password }).then((response) => {
+            console.log(response)
+			if (response.data.status !== 200) {
+				throw new Error(response.status);
+			}else{
+                setCurrUser({userName, password, id:response.data.id})
+				fetchData(userName)
+				initBalance(userName)
+            }
+		}).catch(()=>alert("password or user name is incorret"))
+	};
+
+	return <div className="loginContainer">
+     <div className='loginForm'>
+    <div className='inputs'>
+    <input placeholder='user name' onChange={(e)=>setUserName(e.target.value)}></input>
+    <input placeholder='password' onChange={(e)=>setPassword(e.target.value)} ></input>
+    </div>
+    <div className='loginBtns'>
+      <button onClick={()=>{signUp()}}>sign up</button>
+    <button onClick={()=>signIn()}>sign in</button>
+    </div>
+  </div>
+    </div>;
+}

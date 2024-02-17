@@ -173,17 +173,37 @@ input {
 	font-weight: bold;
 }
 
-.addTransacionBtn{
+.addTransacionBtn {
 	display: grid;
 	justify-content: center;
 	align-items: center;
 	align-content: center;
 	text-decoration: none;
 	padding: 20px;
-	
 }
 
-.transactionDate{
+.transactionDate {
 	padding-top: 10px;
 	margin-left: 10px;
+}
+
+.loginContainer {
+	display: grid;
+	justify-content: center;
+}
+
+.loginForm {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 800px;
+}
+
+.loginBtns {
+	display: flex;
+}
+
+.inputs {
+	width: 80%;
 }
