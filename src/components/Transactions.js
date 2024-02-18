@@ -7,13 +7,14 @@ import axios from "axios";
 import { API } from "../server/config";
 
 
-export default function Transactions({ transactions, fetchData, setData }) {
+export default function Transactions({ transactions, fetchData, currUser }) {
 
 	return (
 		<>
 		{transactions.length > 0?	<div className="transactions">
 			{transactions.map((transaction, index) => (
 				<Transaction
+				currUser={currUser}
 					key={index}
 					fetchData={fetchData}
 					transaction={transaction}

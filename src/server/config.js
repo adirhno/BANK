@@ -2,9 +2,10 @@ const { default: axios } = require("axios");
 const API = 'http://localhost:3001'
 
 const calculateCategoryAmount = function (category) {
+	console.log("caa",category)
 	let sum = 0;
-	for (let i = 0; i < category.length; i++) {
-		sum += category[i].amount;
+	for (let i = 0; i < category.transactions.length; i++) {
+		sum += category.transactions[i].amount;
 	}
 	return sum;
 };

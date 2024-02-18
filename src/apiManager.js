@@ -1,24 +1,24 @@
 import axios from "axios";
 import {API} from '../src/server/config'
 
-const getBalance=function(){
-  return  axios.get(`${API}/balance`)
+const getBalance=function(user){
+  return  axios.get(`${API}/balance/${user}`)
 }
 
-const breakdown=function(){
-    return axios.get(`${API}/breakdown`)
+const breakdown=function(user){
+    return axios.get(`${API}/breakdown/${user}`)
 }
 
-const getAllTransactions=function(){
-    return axios.get("http://localhost:3001/")
+const getAllTransactions=function(user){
+    return axios.get(`http://localhost:3001/usert/${user}`)
 }
 
 const addTransaction= function(transaction){
-    return axios.post("http://localhost:3001/transaction",transaction)
+    return axios.post("http://localhost:3001/transactions",transaction)
 }
 
 const deleteTransaction= function (transactionId){
-    return axios.get(`http://localhost:3001/transaction/${transactionId}`)
+    return axios.get(`http://localhost:3001/transactions/${transactionId}`)
 }
 
 const createUser = (user) =>{

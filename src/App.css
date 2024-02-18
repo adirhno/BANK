@@ -187,13 +187,53 @@ input {
 	margin-left: 10px;
 }
 
-.landingFormBts {
+.loginContainer {
 	display: grid;
 	justify-content: center;
 }
 
-.signInForm {
-	display: grid;
-	align-items: center;
+.loginForm {
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
 	justify-content: center;
+	align-items: center;
+	width: 650px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 9	px;
+}
+
+.loginBtns {
+	display: flex;
+	width: 300px;
+	justify-content: space-between;
+	padding: 10px;
+}
+
+.inputs {
+	display: grid;
+	justify-items: center;
+	width: 80%;
+}
+
+.signOutBtn {
+	margin: auto;
+	cursor: pointer;
+	color: brown;
+}
+
+.signOutBtn:hover {
+	font-size: 21px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 3px;
+}
+
+.loginFormBtn{
+
+	height: 30px;
+	width: 90px;
+	font-size: 16px;
+	border-radius: 3px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	background-color: rgb(190, 236, 220);
 }

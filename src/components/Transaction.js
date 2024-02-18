@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Button from "./Button";
 import {deleteTransaction} from '../apiManager'
 
-export default function Transaction({ transaction, fetchData }) {
+export default function Transaction({ transaction, fetchData, currUser }) {
 
 	const handleDeleteTransaction= async (id) =>{
-		 await deleteTransaction(id).then(()=>fetchData())
+		 await deleteTransaction(id).then(()=>fetchData(currUser.userName))
 	}
 	return (
 		<div className="transaction">

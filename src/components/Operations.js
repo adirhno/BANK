@@ -4,7 +4,7 @@ import { addTransaction } from "../apiManager";
 import { Snackbar } from "@material/react-snackbar";
 import "@material/react-snackbar/dist/snackbar.css";
 
-export default function Operations({ fetchData, balance }) {
+export default function Operations({ fetchData, balance, currUser }) {
 	const [amount, setAmount] = useState(0);
 	const [vendor, setVendor] = useState("");
 	const [category, setCategory] = useState("");
@@ -25,9 +25,9 @@ export default function Operations({ fetchData, balance }) {
 	};
 
 	const handleAddTransaction = function (action) {
-		let newTransaction = { amount, vendor, category };
+		let newTransaction = { amount, vendor, category};
 
-		addTransaction({ newTransaction, balance, action }).then((result) => {
+		addTransaction({ newTransaction, balance, action, currUser }).then((result) => {
 			if (result.data.err) {
 				setSnackStatus("low balance");
 				return;
@@ -35,7 +35,7 @@ export default function Operations({ fetchData, balance }) {
 				refresh()
 				setSnackStatus("added");
 				console.log(result.data.newBalance);
-				 fetchData();
+				 fetchData(currUser.userName);
 			}
 		});
 	};
