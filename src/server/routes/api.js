@@ -63,7 +63,7 @@ router.post("/breakdown", function (req, res) {
 		},
 	}).then((transactions) => res.send(transactions));
 });
-router.get(`${API}/breakdown/:user`, async function (req, res) {
+router.get(`/breakdown/:user`, async function (req, res) {
 	let categoriesObj = {};
 	let categoriesArr = [];
 
