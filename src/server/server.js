@@ -3,7 +3,7 @@ const app=express()
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
-const api=require('./routes/api')
+const api = require('./routes/api')
  require('dotenv').config();
  
 mongoose.connect(process.env.MONGODB_URI , {
@@ -20,9 +20,9 @@ app.use(function (req, res, next) {
 })
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(`https://bank-g61v.onrender.com${api}`);
+app.use(api);
 
 const PORT = 3001;
-app.listen(process.env.PORT || PORT, function () {
+app.listen(PORT, function () {
 	console.log("Server up and running on port ",PORT);
 });

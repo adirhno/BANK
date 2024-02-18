@@ -105,7 +105,7 @@ router.get(`${API}/breakdown/:user`, async function (req, res) {
 	// 	});
 });
 
-router.get(`${API}/balance/:user`, async function (req, res) {
+router.get(`/balance/:user`, async function (req, res) {
 	console.log("from balance user", req.params.user);
 	const balance = await User.findOne({ userName: req.params.user })
 		.select("transactions")
