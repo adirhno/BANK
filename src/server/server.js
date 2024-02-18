@@ -4,8 +4,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const api=require('./routes/api')
-
-mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/bank", {
+ require('dotenv').config();
+ 
+mongoose.connect(process.env.MONGODB_URI , {
 		useNewUrlParser: true,
 	})
 	.then(() => console.log("conneted to DB"))
