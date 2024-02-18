@@ -5,8 +5,8 @@ const getBalance=function(user){
   return  axios.get(`${API}/balance/${user}`)
 }
 
-const breakdown=function(){
-    return axios.get(`${API}/breakdown`)
+const breakdown=function(user){
+    return axios.get(`${API}/breakdown/${user}`)
 }
 
 const getAllTransactions=function(user){

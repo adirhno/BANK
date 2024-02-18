@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { API } from "../server/config";
 import axios from "axios";
 
-export default function Landing({ setCurrUser, fetchData, initBalance }) {
+export default function Landing({ setCurrUser, fetchData, initBalance, fetchCategoriesSum }) {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -23,6 +23,7 @@ export default function Landing({ setCurrUser, fetchData, initBalance }) {
                 setCurrUser({userName, password, id:response.data.id})
 				fetchData(userName)
 				initBalance(userName)
+				fetchCategoriesSum(userName)
             }
 		}).catch(()=>alert("password or user name is incorret"))
 	};
@@ -31,11 +32,11 @@ export default function Landing({ setCurrUser, fetchData, initBalance }) {
      <div className='loginForm'>
     <div className='inputs'>
     <input placeholder='user name' onChange={(e)=>setUserName(e.target.value)}></input>
-    <input placeholder='password' onChange={(e)=>setPassword(e.target.value)} ></input>
+    <input type="password" placeholder='password' onChange={(e)=>setPassword(e.target.value)} ></input>
     </div>
     <div className='loginBtns'>
-      <button onClick={()=>{signUp()}}>sign up</button>
-    <button onClick={()=>signIn()}>sign in</button>
+      <button className="loginFormBtn" onClick={()=>{signUp()}}>sign up</button>
+    <button className="loginFormBtn" onClick={()=>signIn()}>sign in</button>
     </div>
   </div>
     </div>;
