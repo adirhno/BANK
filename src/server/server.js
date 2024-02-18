@@ -20,7 +20,7 @@ app.use(function (req, res, next) {
 })
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(api);
+app.use(`https://bank-g61v.onrender.com/${api}`);
 
 const PORT = 3001;
 app.listen(process.env.PORT || PORT, function () {

@@ -118,7 +118,7 @@ router.get(`${API}/balance/:user`, async function (req, res) {
 	res.send({ sum: sum });
 });
 
-router.post(`${API}/signup`, function (req, res) {
+router.post(`/signup`, function (req, res) {
 	let userDetails = req.body;
 	userDetails["transactions"] = [];
 	userDetails["balance"] = 0;
@@ -127,7 +127,7 @@ router.post(`${API}/signup`, function (req, res) {
 	res.sendStatus(200);
 });
 
-router.post(`${API}/users`, function (req, res) {
+router.post(`/users`, function (req, res) {
 	let user = req.body;
 	console.log(user);
 	User.find({ userName: user.userName }).then((data) => {
