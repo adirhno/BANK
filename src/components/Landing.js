@@ -7,7 +7,7 @@ export default function Landing({ setCurrUser, fetchData, initBalance, fetchCate
 	const [password, setPassword] = useState("");
 
 	const signUp = () => {
-		axios.post(`https://bank-g61v.onrender.com/signup`, { userName, password }).then((data) => {
+		axios.post(`${API}signup`, { userName, password }).then((data) => {
 			data.status === 200
 				? setCurrUser({ userName, password, id:data.data.id })
 				: console.log(data);

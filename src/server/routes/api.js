@@ -3,7 +3,7 @@ const router = express.Router();
 const Transaction = require("../models/Transaction");
 const User = require("../models/User");
 const axios = require("axios");
-const { calculateCategoryAmount } = require("../config");
+const { calculateCategoryAmount, API } = require("../config");
 const { isValidObjectId } = require("mongoose");
 const ObjectId = require("mongodb").ObjectId;
 
@@ -63,7 +63,7 @@ router.post("/breakdown", function (req, res) {
 		},
 	}).then((transactions) => res.send(transactions));
 });
-router.get("/breakdown/:user", async function (req, res) {
+router.get(`${API}/breakdown/:user`, async function (req, res) {
 	let categoriesObj = {};
 	let categoriesArr = [];
 
@@ -105,7 +105,7 @@ router.get("/breakdown/:user", async function (req, res) {
 	// 	});
 });
 
-router.get("/balance/:user", async function (req, res) {
+router.get(`${API}/balance/:user`, async function (req, res) {
 	console.log("from balance user", req.params.user);
 	const balance = await User.findOne({ userName: req.params.user })
 		.select("transactions")
@@ -118,7 +118,7 @@ router.get("/balance/:user", async function (req, res) {
 	res.send({ sum: sum });
 });
 
-router.post("/signup", function (req, res) {
+router.post(`${API}/signup`, function (req, res) {
 	let userDetails = req.body;
 	userDetails["transactions"] = [];
 	userDetails["balance"] = 0;
@@ -127,7 +127,7 @@ router.post("/signup", function (req, res) {
 	res.sendStatus(200);
 });
 
-router.post("/users", function (req, res) {
+router.post(`${API}/users`, function (req, res) {
 	let user = req.body;
 	console.log(user);
 	User.find({ userName: user.userName }).then((data) => {
