@@ -34,10 +34,12 @@ function App() {
 		});
 	};
 
+	
+
 	return <div className="App">
 	 {currUser ? <Navbar setCurrUser={setCurrUser} userName={currUser.userName} balance={balance} />:<Navbar />}
    {currUser?  <Routes>
-    <Route path='/' element={<Transactions currUser={currUser} setData={setData} fetchData={fetchData} transactions={data} />} />
+    <Route path='/transactions' element={<Transactions currUser={currUser} setData={setData} fetchData={fetchData} transactions={data} />} />
     <Route path='/operations' element={ <Operations currUser={currUser} balance={balance} fetchData={fetchData} setBalance={setBalance} />} />
     <Route path='/breakdown' element={<Breakdown setCategoriesSum={setCategoriesSum} categoriesSum={categoriesSum} />} />
     </Routes>  : <Landing fetchCategoriesSum={fetchCategoriesSum} initBalance={initBalance} fetchData={fetchData} setCurrUser={setCurrUser}/>}

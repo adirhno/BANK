@@ -1,14 +1,10 @@
 
 import { Link } from "react-router-dom";
 import Transaction from "./Transaction";
-import { DatePicker } from "@mui/x-date-pickers";
-import { useState } from "react";
-import axios from "axios";
-import { API } from "../server/config";
 
 
 export default function Transactions({ transactions, fetchData, currUser }) {
-
+console.log("transaco", transactions)
 	return (
 		<>
 		{transactions.length > 0?	<div className="transactions">
