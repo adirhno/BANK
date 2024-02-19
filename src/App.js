@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Operations from "./components/Operations";
 import Breakdown from "./components/Breakdown";
-import { getBalance, breakdown, getAllTransactions } from "./apiManager";
+import { getBalance, breakdown, getAllTransactions, createUser } from "./apiManager";
 import Landing from "./components/Landing";
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
     <Route path='/transactions' element={<Transactions currUser={currUser} setData={setData} fetchData={fetchData} transactions={data} />} />
     <Route path='/operations' element={ <Operations currUser={currUser} balance={balance} fetchData={fetchData} setBalance={setBalance} />} />
     <Route path='/breakdown' element={<Breakdown setCategoriesSum={setCategoriesSum} categoriesSum={categoriesSum} />} />
-    </Routes>  : <Landing fetchCategoriesSum={fetchCategoriesSum} initBalance={initBalance} fetchData={fetchData} setCurrUser={setCurrUser}/>}
+    </Routes>  : <Landing createUser={createUser} fetchCategoriesSum={fetchCategoriesSum} initBalance={initBalance} fetchData={fetchData} setCurrUser={setCurrUser}/>}
   
 	</div>;
 }

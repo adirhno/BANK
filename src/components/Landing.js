@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { API } from "../server/config";
 import axios from "axios";
 
-export default function Landing({ setCurrUser, fetchData, initBalance, fetchCategoriesSum }) {
+export default function Landing({ setCurrUser, fetchData, initBalance, fetchCategoriesSum, createUser }) {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 
 	const signUp = () => {
-		axios.post(`${API}/signup`, { userName, password }).then((data) => {
+		let user={userName, password}
+		createUser(user).then((data) => {
 			data.status === 200
 				? setCurrUser({ userName, password, id:data.data.id })
 				: console.log(data);
