@@ -6,8 +6,7 @@ const path = require("path");
 const api = require('./routes/api')
  require('dotenv').config();
  
-mongoose.connect(process.env.MONGODB_URI , {
-		useNewUrlParser: true,
+mongoose.connect('mongodb+srv://adirhno:123654Ah@apps.4hep4qd.mongodb.net/?retryWrites=true&w=majority' , {useNewUrlParser: true,
 	})
 	.then(() => console.log("conneted to DB"))
 	.catch((err) => console.log(err));
