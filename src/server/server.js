@@ -22,7 +22,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(api);
 
-const PORT = 3001;
-app.listen(process.env.PORT || PORT, function () {
-	console.log("Server up and running on port ",PORT);
+const port = process.env.PORT || 3001;
+
+app.listen(port, function () {
+	console.log("Server up and running on port ",port);
 });
