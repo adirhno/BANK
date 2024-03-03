@@ -94,7 +94,7 @@ router.get("/balance/:user", async function (req, res) {
 	res.send({ sum: sum });
 });
 
-router.post("/signup", function (req, res) {
+router.post("https://bank-g61v.onrender.com/signup", function (req, res) {
 	let userDetails = req.body;
 	userDetails["transactions"] = [];
 	userDetails["balance"] = 0;
