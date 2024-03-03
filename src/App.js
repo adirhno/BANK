@@ -14,28 +14,28 @@ function App() {
 	const [balance, setBalance] = useState(0);
 	const [currUser, setCurrUser] = useState(false);
 
-	const initBalance = function (userName) {
-		getBalance(userName).then((results) => {
+	const initBalance = function (userEmail) {
+		getBalance(userEmail).then((results) => {
 			setBalance(results.data.sum);
 		});
 	};
 
-	const fetchCategoriesSum = function (user) {
-		breakdown(user).then((results) => {
+	const fetchCategoriesSum = function (userEmail) {
+		breakdown(userEmail).then((results) => {
 			setCategoriesSum(results.data);
 		});
 	};
 
-	const fetchData = function (user) {
-		getAllTransactions(user).then((data) => {
+	const fetchData = function (userEmail) {
+		getAllTransactions(userEmail).then((data) => {
 			setData(data.data);
-			initBalance(user);
-			fetchCategoriesSum(user);
+			initBalance(userEmail);
+			fetchCategoriesSum(userEmail);
 		});
 	};
 
 	return <div className="App">
-	 {currUser ? <Navbar setCurrUser={setCurrUser} userName={currUser.userName} balance={balance} />:<Navbar />}
+	 {currUser ? <Navbar setCurrUser={setCurrUser} userName={currUser.userName} balance={balance} />:<></>}
    {currUser?  <Routes>
     <Route path='/' element={<Transactions currUser={currUser} setData={setData} fetchData={fetchData} transactions={data} />} />
     <Route path='/operations' element={ <Operations currUser={currUser} balance={balance} fetchData={fetchData} setBalance={setBalance} />} />

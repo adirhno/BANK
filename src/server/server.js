@@ -6,7 +6,7 @@ const path = require("path");
 const api=require('./routes/api')
  require('dotenv').config();
  
-mongoose.connect(process.env.MONGODB_URI , {
+mongoose.connect( "mongodb://localhost:27017/bank", {
 		useNewUrlParser: true,
 	})
 	.then(() => console.log("conneted to DB"))
@@ -23,6 +23,6 @@ app.use(bodyParser.json());
 app.use(api);
 
 const PORT = 3001;
-app.listen(process.env.PORT || PORT, function () {
+app.listen( PORT, function () {
 	console.log("Server up and running on port ",PORT);
 });

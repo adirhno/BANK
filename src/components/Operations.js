@@ -34,13 +34,12 @@ export default function Operations({ fetchData, balance, currUser }) {
 			} else {
 				refresh()
 				setSnackStatus("added");
-				console.log(result.data.newBalance);
-				 fetchData(currUser.userName);
+				 fetchData(currUser.email);
 			}
 		});
 	};
 
-	console.log(snackbarStatus);
+	
 
 	return (
 		<div>

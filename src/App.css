@@ -28,11 +28,17 @@
 	top: 0;
 }
 
+.landingNavbar {
+	margin-left: 40%;
+	margin-right: 35%;
+}
+
 .card {
 	text-decoration: none;
 	margin-top: 10px;
 	color: rgb(35, 36, 37);
 	font-weight: bold;
+	min-width: fit-content;
 }
 
 .card:hover {
@@ -200,7 +206,7 @@ input {
 	align-items: center;
 	width: 650px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	border-radius: 9	px;
+	border-radius: 9 px;
 }
 
 .loginBtns {
@@ -228,12 +234,27 @@ input {
 	border-radius: 3px;
 }
 
-.loginFormBtn{
-
+.loginFormBtn {
 	height: 30px;
 	width: 90px;
 	font-size: 16px;
 	border-radius: 3px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	background-color: rgb(190, 236, 220);
+}
+
+.loginFormBtnSignUp {
+	height: 30px;
+	width: 90px;
+	font-size: 16px;
+	border-radius: 3px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	background-color: rgb(190, 236, 220);
+	margin-left: 30%;
+}
+
+.backBtn{
+
+margin-top: 10px;
+margin-right: 580px;
 }
