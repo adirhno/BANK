@@ -53,7 +53,7 @@ export default function Landing({ setCurrUser, fetchData, initBalance, fetchCate
 				initBalance(email)
 				fetchCategoriesSum(email)
             }
-		}).catch(()=>alert("password or user name is incorret"))
+		}).catch((e)=>alert("password or user name is incorret"))
 		}
 	
 	};
