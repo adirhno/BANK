@@ -4,7 +4,7 @@ const Transaction = require("../models/Transaction");
 const User = require("../models/User");
 const { calculateCategoryAmount } = require("../config");
 
-router.get("/:user", async function (req, res) {
+router.get("/home/:user", async function (req, res) {
 	const user = await User.findOne({ email: `${req.params.user}` })
 		.select("transactions")
 		.populate("transactions");

@@ -10,7 +10,7 @@ const breakdown=function(user){
 }
 
 const getAllTransactions=function(user){
-    return axios.get(`http://localhost:3001/${user}`)
+    return axios.get(`http://localhost:3001/home/${user}`)
 }
 
 const addTransaction= function(transaction){
