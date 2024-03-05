@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "./Button";
-import {deleteTransaction} from '../apiManager'
+import {deleteTransaction} from '../server/apiManager'
 
 export default function Transaction({ transaction, fetchData, currUser }) {
 

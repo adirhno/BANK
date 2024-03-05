@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Operations from "./components/Operations";
 import Breakdown from "./components/Breakdown";
-import { getBalance, breakdown, getAllTransactions } from "./apiManager";
+import { getBalance, breakdown, getAllTransactions } from "../src/server/apiManager";
 import Landing from "./components/Landing";
 
 function App() {

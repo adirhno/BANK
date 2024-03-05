@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
-import { addTransaction } from "../apiManager";
+import { addTransaction } from "../server/apiManager";
 import { Snackbar } from "@material/react-snackbar";
 import "@material/react-snackbar/dist/snackbar.css";
 
