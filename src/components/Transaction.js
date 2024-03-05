@@ -5,7 +5,7 @@ import {deleteTransaction} from '../server/apiManager'
 export default function Transaction({ transaction, fetchData, currUser }) {
 
 	const handleDeleteTransaction= async (id) =>{
-		 await deleteTransaction(id).then(()=>fetchData(currUser.userName))
+		 await deleteTransaction(id).then(()=>fetchData(currUser.email))
 	}
 	return (
 		<div className="transaction">
