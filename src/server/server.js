@@ -6,7 +6,7 @@ const path = require("path");
 const api=require('./routes/api')
  require('dotenv').config();
  
-mongoose.connect('mongodb+srv://adirhno:123654ah@cluster0.lumshlz.mongodb.net/?retryWrites=true&w=majority' , {
+mongoose.connect(process.env.MONGODB_URI, {
 		useNewUrlParser: true,
 	})
 	//  "mongodb://localhost:27017/bank"
