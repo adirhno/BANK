@@ -10,15 +10,15 @@ const breakdown=function(user){
 }
 
 const getAllTransactions=function(user){
-    return axios.get(`http://localhost:3001/home/${user}`)
+    return axios.get(`${API}/home/${user}`)
 }
 
 const addTransaction= function(transaction){
-    return axios.post("http://localhost:3001/transactions",transaction)
+    return axios.post(`${API}/transactions`,transaction)
 }
 
 const deleteTransaction= function (transactionId){
-    return axios.get(`http://localhost:3001/transactions/${transactionId}`)
+    return axios.get(`${API}/transactions/${transactionId}`)
 }
 
 export {getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction}
