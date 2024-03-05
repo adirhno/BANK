@@ -1,5 +1,5 @@
 import axios from "axios";
-import {API} from '../src/server/config'
+import {API} from '../server/config'
 
 const getBalance=function(user){
   return  axios.get(`${API}/balance/${user}`)
