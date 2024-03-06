@@ -14,36 +14,37 @@ function App() {
 	const [categoriesSum, setCategoriesSum] = useState({});
 	const [balance, setBalance] = useState(0);
 	const [currUser, setCurrUser] = useState(false);
+	const [isLoading, setIsLoading] = useState(true)
 
-	
-
-	const initBalance = function (userEmail) {
-		getBalance(userEmail).then((results) => {
+	const initBalance = async function (userEmail) {
+			await getBalance(userEmail).then((results) => {
 			setBalance(results.data.sum);
 		});
 	};
 
-	const fetchCategoriesSum = function (userEmail) {
-		breakdown(userEmail).then((results) => {
+	const fetchCategoriesSum =async function (userEmail) {
+			await breakdown(userEmail).then((results) => {
 			setCategoriesSum(results.data);
 		});
 	};
 
-	const fetchData = function (userEmail) {
-		getAllTransactions(userEmail).then((data) => {
-			setData(data.data);
-			initBalance(userEmail);
-			fetchCategoriesSum(userEmail);
+	const fetchData = async function (userEmail){
+		await getAllTransactions(userEmail).then(async (data) => {
+			 setData(data.data);
+			await initBalance(userEmail);
+			await fetchCategoriesSum(userEmail);
 		});
+		setIsLoading(false)
 	};
 
+
 	return <div className="App" >
-	 {currUser ? <Navbar  setCurrUser={setCurrUser} userName={currUser.userName} balance={balance} />:<></>}
+	 {currUser ? <Navbar setCurrUser={setCurrUser} userName={currUser.userName} balance={balance}/> :<></> }
    {currUser?  <Routes>
     <Route path='/' element={<Transactions currUser={currUser} setData={setData} fetchData={fetchData} transactions={data} />} />
     <Route path='/operations' element={ <Operations currUser={currUser} balance={balance} fetchData={fetchData} setBalance={setBalance} />} />
     <Route path='/breakdown' element={<Breakdown setCategoriesSum={setCategoriesSum} categoriesSum={categoriesSum} />} />
-    </Routes>  : <Landing  fetchCategoriesSum={fetchCategoriesSum} initBalance={initBalance} fetchData={fetchData} setCurrUser={setCurrUser}/>}
+    </Routes>  : <Landing isLoading={isLoading} setIsLoading={setIsLoading} fetchCategoriesSum={fetchCategoriesSum} initBalance={initBalance} fetchData={fetchData} setCurrUser={setCurrUser}/>}
   
 	</div>;
 }

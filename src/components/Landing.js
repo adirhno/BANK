@@ -3,13 +3,17 @@ import { API } from "../server/config";
 import axios from "axios";
 import { Snackbar } from "@material/react-snackbar";
 import "@material/react-snackbar/dist/snackbar.css";
+import { Progress } from "rsuite";
+import Nis from "./Nis";
 
-export default function Landing({ setCurrUser, fetchData, initBalance, fetchCategoriesSum }) {
+
+export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoading }) {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("")
 	const [loginStatus, setLoginStatus] = useState("signIn")
 	const [snackBar, setSnackBar] = useState("")
+
 
 	useEffect(()=>{setSnackBar("")},[loginStatus])
 	const isSigninValidate = function(){
@@ -27,43 +31,46 @@ export default function Landing({ setCurrUser, fetchData, initBalance, fetchCate
 			return false
 		}else{
 			return true
-		}
-		
+		}	
 	}
 
 	const signUp = () => {
 		if(isSignupValidate()){
-			axios.post(`${API}/signup`, { userName, password, email }).then((data) => {
-			data.status === 200
-				? setCurrUser({ userName, password, id:data.data.id, email },fetchData(email),
-				initBalance(email),
-				fetchCategoriesSum(email))
-				
-				: console.log(data);
-		});
-		}
-	};
+			setIsLoading(true)
+		 axios.post(`${API}/signup`, { userName, password, email }).then(async(data) => {
+			if(data.status === 200){
+				await fetchData(email)
+				console.log('user is:', data)
+				 setCurrUser({userName, password, email})
+                 
+           
+			}else{
+				console.log(data);
+			}
+		})
+	}}
 
 	const signIn = () => {
-		
+		setIsLoading(true)
 		if(isSigninValidate()){
-	axios.post(`${API}/signin`, { password, email }).then((response) => {
+	axios.post(`${API}/signin`, { password, email }).then(async(response)  => {
 			if (response.data.status !== 200) {
 				throw new Error(response.status);
 			}else{
-                setCurrUser({userName:response.data.userName, password, id:response.data.id, email})
-				fetchData(email)
-				initBalance(email)
-				fetchCategoriesSum(email)
+			await fetchData(email)
+				setCurrUser({userName:response.data.userName, password, id:response.data.id, email})	 
             }
 		}).catch((e)=>alert("password or user name is incorret"))
 		}
-	
 	};
 
 	return <>
 	<div className="navbar"><p className="landingNavbar">Welcome To Your Transactions Manager</p></div>
-		{loginStatus === "signIn"?  (<div className="loginContainer">
+	
+		{loginStatus === "signIn"? (<div className="loginContainer">
+		
+		{isLoading?<Nis />:<></>}	
+		 
 			<div className='loginForm'>
 		<div className='inputs'>
    	 <input placeholder='email' onChange={(e)=>setEmail(e.target.value)}></input>
