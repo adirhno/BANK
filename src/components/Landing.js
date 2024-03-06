@@ -35,7 +35,10 @@ export default function Landing({ setCurrUser, fetchData, initBalance, fetchCate
 		if(isSignupValidate()){
 			axios.post(`${API}/signup`, { userName, password, email }).then((data) => {
 			data.status === 200
-				? setCurrUser({ userName, password, id:data.data.id, email })
+				? setCurrUser({ userName, password, id:data.data.id, email },fetchData(email),
+				initBalance(email),
+				fetchCategoriesSum(email))
+				
 				: console.log(data);
 		});
 		}
