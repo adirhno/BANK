@@ -35,15 +35,14 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 	}
 
 	const signUp = () => {
+		
 		if(isSignupValidate()){
-			setIsLoading(true)
+			setIsLoading(true)			
 		 axios.post(`${API}/signup`, { userName, password, email }).then(async(data) => {
 			if(data.status === 200){
 				await fetchData(email)
 				console.log('user is:', data)
 				 setCurrUser({userName, password, email})
-                 
-           
 			}else{
 				console.log(data);
 			}
@@ -55,12 +54,16 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 		if(isSigninValidate()){
 	axios.post(`${API}/signin`, { password, email }).then(async(response)  => {
 			if (response.data.status !== 200) {
+			
 				throw new Error(response.status);
 			}else{
 			await fetchData(email)
 				setCurrUser({userName:response.data.userName, password, id:response.data.id, email})	 
             }
-		}).catch((e)=>alert("password or user name is incorret"))
+		}).catch((e)=>{
+			alert("password or user name is incorret")
+			setIsLoading(false)
+		})
 		}
 	};
 
@@ -69,7 +72,7 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 	
 		{loginStatus === "signIn"? (<div className="loginContainer">
 		
-		{isLoading?<LoadingBar />:<></>}	
+		{isLoading?<LoadingBar action={"signIn"} />:<></>}	
 		 
 			<div className='loginForm'>
 		<div className='inputs'>
@@ -82,6 +85,7 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
     </div>
   </div>
     </div>):(<div className="loginContainer">
+	{isLoading?<LoadingBar action={"signUp"} />:<></>}	
      <div className='loginForm'>
 	 <button className="backBtn" onClick={()=>setLoginStatus("signIn")}>back</button>
     <div className='inputs'>

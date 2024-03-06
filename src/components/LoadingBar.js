@@ -2,7 +2,7 @@ import "rsuite/dist/rsuite.min.css";
 import { Progress, ButtonGroup, Button } from "rsuite";
 import { useEffect, useState } from "react";
 
-export default function LoadingBar() {
+export default function LoadingBar({action}) {
 	const [percent, setPercent] = useState(0);
 
 	useEffect(() => {
@@ -26,7 +26,9 @@ export default function LoadingBar() {
 				style={{
 					textAlign: "center",
 				}}>
-				<h2>Loading your data, please wait...</h2>
+				{action == "signIn"?
+				<h2>Loading your data, please wait...</h2>:
+				<h2>Creating your account, please wait...</h2>}
 				<h4
 					style={{
 						color: "green",
