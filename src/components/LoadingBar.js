@@ -2,18 +2,19 @@ import "rsuite/dist/rsuite.min.css";
 import { Progress, ButtonGroup, Button } from "rsuite";
 import { useEffect, useState } from "react";
 
-export default function Nis() {
+export default function LoadingBar() {
 	const [percent, setPercent] = useState(0);
 
 	useEffect(() => {
-		const interval = setInterval((time) => {
-			if (percent > 100) {
+		const interval = setInterval(() => {
+			if (percent >= 100) {
 				setPercent(0);
 			} else {
-				setPercent((p) => p + 5);
+				setPercent((p)=>p+1)
 			}
-		}, 200);
-		return () => clearInterval(interval);
+		},130);
+
+		return () => {clearInterval(interval)}
 	}, [percent]);
 
 	const status = percent === 100 ? "success" : null;

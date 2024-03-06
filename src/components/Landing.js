@@ -4,7 +4,7 @@ import axios from "axios";
 import { Snackbar } from "@material/react-snackbar";
 import "@material/react-snackbar/dist/snackbar.css";
 import { Progress } from "rsuite";
-import Nis from "./Nis";
+import LoadingBar from "./LoadingBar";
 
 
 export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoading }) {
@@ -69,7 +69,7 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 	
 		{loginStatus === "signIn"? (<div className="loginContainer">
 		
-		{isLoading?<Nis />:<></>}	
+		{isLoading?<LoadingBar />:<></>}	
 		 
 			<div className='loginForm'>
 		<div className='inputs'>

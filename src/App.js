@@ -14,7 +14,7 @@ function App() {
 	const [categoriesSum, setCategoriesSum] = useState({});
 	const [balance, setBalance] = useState(0);
 	const [currUser, setCurrUser] = useState(false);
-	const [isLoading, setIsLoading] = useState(true)
+	const [isLoading, setIsLoading] = useState(false)
 
 	const initBalance = async function (userEmail) {
 			await getBalance(userEmail).then((results) => {
