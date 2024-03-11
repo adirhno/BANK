@@ -29,12 +29,12 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-		 "start": "react-scripts --max_old_space_size=8192 start",
+		"start": "react-scripts start",
 		"dev": "nodemon server.js",
-		 "build": "react-scripts --max_old_space_size=8192 build",
+		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"serve":"--max_old_space_size=8192"
+		"serve":"--max_old_space_size=8192'"
 	},
 	"eslintConfig": {
 		"extends": [
