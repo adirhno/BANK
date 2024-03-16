@@ -8,7 +8,6 @@ import Breakdown from "./components/Breakdown";
 import { getBalance, breakdown, getAllTransactions } from "../src/server/apiManager";
 import Landing from "./components/Landing";
 
-
 function App() {
 	const [data, setData] = useState([]);
 	const [categoriesSum, setCategoriesSum] = useState({});
