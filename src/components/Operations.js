@@ -44,16 +44,16 @@ export default function Operations({ fetchData, balance, currUser }) {
 	return (
 		<div>
 			<div className="operations">
-				Insert Transacions
-				<input
-					placeholder="Transaction amount"
+				Insert Transacion
+				<input className="operationsInput"
+					placeholder="amount"
 					onChange={(e) => setAmount(parseInt(e.target.value))}></input>
-				<input
-					placeholder="Transaction vendor"
+				<input className="operationsInput"
+					placeholder="vendor"
 					onChange={(e) => setVendor(e.target.value)}
 					value={vendor}></input>
-				<input
-					placeholder="Transaction category"
+				<input className="operationsInput"
+					placeholder="category"
 					onChange={(e) => setCategory(e.target.value)}
 					value={category}></input>
 				<div className="operationsBtns">

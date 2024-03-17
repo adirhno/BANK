@@ -29,8 +29,8 @@
 }
 
 .landingNavbar {
-	margin-left: 40%;
-	margin-right: 35%;
+	margin-left: 38%;
+	margin-right: 30%;
 }
 
 .card {
@@ -45,6 +45,7 @@
 	font-size: 21px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	border-radius: 3px;
+	text-decoration: none;
 }
 
 .transactions {
@@ -117,15 +118,18 @@
 	padding: 15px;
 }
 
+.operationsInput {
+	margin: 18px;
+}
+
 .operations {
-	font-family: "Arvo", serif;
 	width: 50%;
 	border: solid black 0px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	margin: 45px;
 	padding: 40px;
 	font-weight: bold;
-	font-size: 28px;
+	font-size: 24px;
 }
 
 input {
@@ -156,6 +160,7 @@ input {
 }
 
 .Deposit {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	background-color: rgb(99, 186, 99);
 	color: rgb(255, 255, 255);
 	padding: 8px;
@@ -164,6 +169,7 @@ input {
 }
 
 .Withdraw {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	background-color: rgb(211, 83, 83);
 	color: rgb(255, 255, 255);
 	padding: 8px;
@@ -172,11 +178,13 @@ input {
 }
 
 .Delete {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	background-color: rgb(211, 83, 83);
 	color: rgb(255, 255, 255);
 	padding: 8px;
 	font-size: 16px;
 	font-weight: bold;
+	border-radius: 5px;
 }
 
 .addTransacionBtn {
@@ -254,8 +262,7 @@ input {
 	margin-left: 30%;
 }
 
-.backBtn{
-
-margin-top: 10px;
-margin-right: 580px;
+.backBtn {
+	margin-top: 10px;
+	margin-right: 580px;
 }

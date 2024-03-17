@@ -27,8 +27,8 @@ export default function LoadingBar({action}) {
 					textAlign: "center",
 				}}>
 				{action == "signIn"?
-				<h2>Loading your data, please wait...</h2>:
-				<h2>Creating your account, please wait...</h2>}
+				<h4>Loading your data, please wait...</h4>:
+				<h4>Creating your account, please wait...</h4>}
 				<h4
 					style={{
 						color: "green",
