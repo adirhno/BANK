@@ -1,3 +1,7 @@
+.App {
+	height: inherit;
+}
+
 .cards {
 	display: flex;
 	width: 50%;
@@ -40,8 +44,25 @@
 	font-weight: bold;
 	min-width: fit-content;
 }
+.emailInput {
+	margin-bottom: 10px;
+}
 
-.card:hover {
+.circleProgress {
+	position: relative;
+	top: -300px;
+	left: 500px;
+	justify-content: center;
+	size: 10px;
+	width: 200px;
+	height: 200px;
+}
+.card:focus {
+	color: brown;
+}
+
+.card :hover {
+	color: black;
 	font-size: 21px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	border-radius: 3px;
@@ -187,6 +208,10 @@ input {
 	border-radius: 5px;
 }
 
+a {
+	text-decoration: none !important;
+}
+
 .addTransacionBtn {
 	display: grid;
 	justify-content: center;
@@ -194,6 +219,7 @@ input {
 	align-content: center;
 	text-decoration: none;
 	padding: 20px;
+	text-decoration: none;
 }
 
 .transactionDate {
@@ -266,3 +292,20 @@ input {
 	margin-top: 10px;
 	margin-right: 580px;
 }
+
+.footer {
+	display: flex;
+	justify-content: center;
+	position: sticky ;
+	
+	bottom: 0;
+	
+	background-color: rgb(171, 231, 231);
+	font-family: "Arvo", serif;
+	font-size: 20px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+	text-decoration: none;
+
+}
+

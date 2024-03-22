@@ -1,5 +1,5 @@
 import "rsuite/dist/rsuite.min.css";
-import { Progress, ButtonGroup, Button } from "rsuite";
+import { Progress } from "rsuite";
 import { useEffect, useState } from "react";
 
 export default function LoadingBar({action}) {
@@ -18,7 +18,7 @@ export default function LoadingBar({action}) {
 	}, [percent]);
 
 	const status = percent === 100 ? "success" : null;
-	const color = percent === 100 ? "#03D613" : "#02749C";
+	const color = percent >= 80 ? "#03D613" : "#02749C";
 
 	return (
 		<div>
@@ -40,7 +40,6 @@ export default function LoadingBar({action}) {
 					textAlign: "center",
 				}}>
 				<div>
-					<ButtonGroup></ButtonGroup>
 					<hr />
 					<Progress.Line
 						percent={percent}

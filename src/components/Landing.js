@@ -16,6 +16,7 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 
 
 	useEffect(()=>{setSnackBar("")},[loginStatus])
+
 	const isSigninValidate = function(){
 		if(email === "" || password === ""){
 			setSnackBar("validationErr")
@@ -35,10 +36,9 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 	}
 
 	const signUp = () => {
-		
 		if(isSignupValidate()){
 			setIsLoading(true)			
-		 axios.post(`${API}/signup`, { userName, password, email }).then(async(data) => {
+		    axios.post(`${API}/signup`, { userName, password, email }).then(async(data) => {
 			if(data.status === 200){
 				await fetchData(email)
 				console.log('user is:', data)
@@ -50,8 +50,8 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 	}}
 
 	const signIn = () => {
-		setIsLoading(true)
 		if(isSigninValidate()){
+			setIsLoading(true)
 	axios.post(`${API}/signin`, { password, email }).then(async(response)  => {
 			if (response.data.status !== 200) {
 			
@@ -69,14 +69,13 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 
 	return <>
 	<div className="navbar"><p className="landingNavbar">Welcome To Your Transactions Manager</p></div>
-	
 		{loginStatus === "signIn"? (<div className="loginContainer">
 		
 		{isLoading?<LoadingBar action={"signIn"} />:<></>}	
 		 
 			<div className='loginForm'>
 		<div className='inputs'>
-   	 <input placeholder='email' onChange={(e)=>setEmail(e.target.value)}></input>
+   	 <input className="emailInput" placeholder='email' onChange={(e)=>setEmail(e.target.value)}></input>
     <input type="password" placeholder='password' onChange={(e)=>setPassword(e.target.value)} required ></input>
     </div>
     <div className='loginBtns'>

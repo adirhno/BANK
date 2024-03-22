@@ -7,6 +7,7 @@ import Operations from "./components/Operations";
 import Breakdown from "./components/Breakdown";
 import { getBalance, breakdown, getAllTransactions } from "../src/server/apiManager";
 import Landing from "./components/Landing";
+import Footer from "./components/Footer";
 
 function App() {
 	const [data, setData] = useState([]);
@@ -44,7 +45,8 @@ function App() {
     <Route path='/operations' element={ <Operations currUser={currUser} balance={balance} fetchData={fetchData} setBalance={setBalance} />} />
     <Route path='/breakdown' element={<Breakdown setCategoriesSum={setCategoriesSum} categoriesSum={categoriesSum} />} />
     </Routes>  : <Landing isLoading={isLoading} setIsLoading={setIsLoading} fetchCategoriesSum={fetchCategoriesSum} initBalance={initBalance} fetchData={fetchData} setCurrUser={setCurrUser}/>}
-  
+	<Footer />
+	
 	</div>;
 }
 
