@@ -26,6 +26,7 @@
 		"react-scripts": "5.0.1",
 		"rsuite": "^5.55.0",
 		"swr": "^2.2.4",
+		"validator": "^13.11.0",
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
@@ -34,7 +35,7 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"serve":"--max_old_space_size=8192'"
+		"serve": "--max_old_space_size=8192'"
 	},
 	"eslintConfig": {
 		"extends": [

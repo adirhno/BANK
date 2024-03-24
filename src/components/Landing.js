@@ -38,31 +38,32 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 	const signUp = () => {
 		if(isSignupValidate()){
 			setIsLoading(true)			
-		    axios.post(`${API}/signup`, { userName, password, email }).then(async(data) => {
-			if(data.status === 200){
+		    axios.post(`${API}/signup`, { userName, password, email }).then(async(response) => {
 				await fetchData(email)
-				console.log('user is:', data)
 				 setCurrUser({userName, password, email})
-			}else{
-				console.log(data);
-			}
-		})
+		}).catch((error)=>{
+			setIsLoading(false)	
+			alert(error)})
 	}}
 
 	const signIn = () => {
 		if(isSigninValidate()){
 			setIsLoading(true)
-	axios.post(`${API}/signin`, { password, email }).then(async(response)  => {
-			if (response.data.status !== 200) {
-			
-				throw new Error(response.status);
-			}else{
-			await fetchData(email)
-				setCurrUser({userName:response.data.userName, password, id:response.data.id, email})	 
-            }
-		}).catch((e)=>{
-			alert("password or user name is incorret")
+			axios.post(`${API}/signin`, { password, email }).then(async(response)  => {
+				await fetchData(email)
+				console.log("imh er")
+				setCurrUser({userName:response.data[0].userName, password, id:response.data[0].id, email})	  
+		}).catch((error)=>{
 			setIsLoading(false)
+			console.log(error)
+			if(error.response){
+				if(error.response.data === "Bad Request"){
+					alert("user not found")
+				}else if(error.response.data === "Unauthorized"){
+					alert("invalid password")
+				}
+			}
+			
 		})
 		}
 	};

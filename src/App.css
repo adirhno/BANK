@@ -297,14 +297,11 @@ a {
 	display: flex;
 	justify-content: center;
 	position: sticky ;
-	
-	bottom: 0;
-	
+	top:97%;
 	background-color: rgb(171, 231, 231);
 	font-family: "Arvo", serif;
 	font-size: 20px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
 	text-decoration: none;
 
 }
