@@ -3,11 +3,14 @@ const app=express()
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
-const api = require('./routes/api')
+const api=require('./routes/api')
+
  require('dotenv').config();
  
-mongoose.connect('mongodb+srv://adirhno:123654Ah@apps.4hep4qd.mongodb.net/?retryWrites=true&w=majority' , {useNewUrlParser: true,
+mongoose.connect(process.env.MONGODB_URI, {
+		useNewUrlParser: true,
 	})
+	//  "mongodb://localhost:27017/bank"
 	.then(() => console.log("conneted to DB"))
 	.catch((err) => console.log(err));
 
@@ -21,8 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(api);
 
-const port = process.env.PORT || 3001;
-
-app.listen(port, function () {
-	console.log("Server up and running on port ",port);
+const PORT = 3001;
+app.listen(process.env.MONGODB_URI | PORT, function () {
+	console.log("Server up and running on port ",PORT);
 });

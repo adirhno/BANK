@@ -2,20 +2,20 @@ const express = require("express");
 const router = express.Router();
 const Transaction = require("../models/Transaction");
 const User = require("../models/User");
-const axios = require("axios");
-const { calculateCategoryAmount, API } = require("../config");
-const { isValidObjectId } = require("mongoose");
-const ObjectId = require("mongodb").ObjectId;
+const { calculateCategoryAmount } = require("../config");
+const validator = require("validator");
 
-router.get("/usert/:user", async function (req, res) {
-	const user = await User.findOne({ userName: `${req.params.user}` })
-		.select("transactions")
-		.populate("transactions");
+router.get("/home/:user", async function (req, res) {
+	try {
+		const user = await User.findOne({ email: `${req.params.user}` })
+			.select("transactions")
+			.populate("transactions");
 
-	res.send(user.transactions);
+		res.send(user.transactions);
+	} catch (error) {
+		res.sendStatus(400)
+	}
 });
-
-router.get("/", async function (req, res) {});
 
 router.post("/transactions", function (req, res) {
 	let transacion = req.body;
@@ -39,7 +39,7 @@ router.post("/transactions", function (req, res) {
 	newTransaciona.save();
 
 	User.findOneAndUpdate(
-		{ userName: req.body.currUser.userName },
+		{ email: req.body.currUser.email },
 		{ $push: { transactions: newTransaciona } }
 	).then((e) => console.log("oushed", e));
 
@@ -55,7 +55,6 @@ router.get("/transactions/:id", function (req, res) {
 
 router.post("/breakdown", function (req, res) {
 	let date = req.body;
-	console.log(date);
 	Transaction.find({
 		createdAt: {
 			$gte: date.start,
@@ -63,79 +62,70 @@ router.post("/breakdown", function (req, res) {
 		},
 	}).then((transactions) => res.send(transactions));
 });
-router.get(`/breakdown/:user`, async function (req, res) {
+
+router.get("/breakdown/:user", async function (req, res) {
 	let categoriesObj = {};
 	let categoriesArr = [];
+	const transactions = await User.findOne({ email: req.params.user }).select("transactions").populate("transactions");
+	transactions.transactions.map((t) => (categoriesObj[t.category] = t.category));
 
-	const transactions = await User.findOne({ userName: req.params.user })
-		.select("transactions")
-		.populate("transactions");
+	for (let i of Object.keys(categoriesObj)) {
+		const category = await User.findOne({email: req.params.user,}).populate({
+			path: "transactions",
+			match: { category: categoriesObj[i] },
+		});
 
-	
-	 transactions.transactions.map((t) => (categoriesObj[t.category] = t.category));
-
-
-		for (let i of Object.keys(categoriesObj)) {
-	const category=await User.findOne({userName: req.params.user}).populate({path:'transactions', match:{category:categoriesObj[i]}})
-	
 		let temCategory = {};
 		temCategory["name"] = categoriesObj[i];
 		temCategory["sum"] = calculateCategoryAmount(category);
 		categoriesArr.push(temCategory);
-		}
-	
+	}
 	res.send(categoriesArr);
-
-	// await Transaction.findOne({})
-	// 	.then((transactions) => {
-	// 		transactions.map((t) => (categoriesObj[t.category] = t.category));
-	// 	})
-	// 	.then(async () => {
-	// 		for (let i of Object.keys(categoriesObj)) {
-	// 			let temCategory = {};
-	// 			await Transaction.find({ category: categoriesObj[i] }).then(
-	// 				(result) => {
-	// 					temCategory["name"] = categoriesObj[i];
-	// 					temCategory["sum"] = calculateCategoryAmount(result);
-	// 					categoriesArr.push(temCategory);
-	// 				}
-	// 			);
-	// 		}
-	// 		res.send(categoriesArr);
-	// 	});
 });
 
-router.get(`/balance/:user`, async function (req, res) {
-	console.log("from balance user", req.params.user);
-	const balance = await User.findOne({ userName: req.params.user })
-		.select("transactions")
-		.populate("transactions");
-
-	let allCategories = balance.transactions;
-	console.log("from balance", allCategories);
-	let sum = 0;
-	allCategories.map((c) => (sum += c.amount));
-	res.send({ sum: sum });
+router.get("/balance/:user", async function (req, res) {
+	try{
+		const balance = await User.findOne({ email: req.params.user }).select("transactions").populate("transactions");
+		let allCategories = balance.transactions;
+		let sum = 0;
+		allCategories.map((c) => (sum += c.amount));
+		res.send({ sum: sum });	
+	}catch (error){
+		res.sendStatus(400)
+	}
 });
 
 router.post(`/signup`, function (req, res) {
 	let userDetails = req.body;
-	userDetails["transactions"] = [];
-	userDetails["balance"] = 0;
-	let u1 = new User(userDetails);
-	u1.save();
-	res.sendStatus(200);
+	try {
+		if (validator.isEmail(userDetails.email)) {
+			userDetails["transactions"] = [];
+			userDetails["balance"] = 0;
+			let u1 = new User(userDetails);
+			u1.save();
+			res.sendStatus(200);
+		} else {
+			throw "invalid email!";
+		}
+	} catch (error) {
+		res.sendStatus(400);
+	}
 });
 
-router.post(`/users`, function (req, res) {
-	let user = req.body;
-	console.log(user);
-	User.find({ userName: user.userName }).then((data) => {
-		data.length > 0
-			? data[0].password == user.password
-				? res.send({ status: 200, id: data[0]._id })
-				: res.sendStatus(401)
-			: res.sendStatus(401);
-	});
+router.post("/signin",async function  (req, res) {
+	
+	try{
+		const user = await User.find({ email: req.body.email })
+		if(user.length<1){
+			 throw new Error()
+		}
+		else if(user[0].password == req.body.password){
+			res.json(user)
+		}else{
+			res.sendStatus(401)
+		}
+	}catch (error){
+			 res.send(error);
+	}
 });
 module.exports = router;

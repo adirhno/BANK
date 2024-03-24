@@ -1,5 +1,5 @@
 import axios from "axios";
-import {API} from '../src/server/config'
+import {API} from '../server/config'
 
 const getBalance=function(user){
   return  axios.get(`${API}/balance/${user}`)
@@ -10,7 +10,7 @@ const breakdown=function(user){
 }
 
 const getAllTransactions=function(user){
-    return axios.get(`${API}/usert/${user}`)
+    return axios.get(`${API}/home/${user}`)
 }
 
 const addTransaction= function(transaction){

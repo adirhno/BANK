@@ -1,44 +1,106 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { API } from "../server/config";
 import axios from "axios";
+import { Snackbar } from "@material/react-snackbar";
+import "@material/react-snackbar/dist/snackbar.css";
+import { Progress } from "rsuite";
+import LoadingBar from "./LoadingBar";
 
-export default function Landing({ setCurrUser, fetchData, initBalance, fetchCategoriesSum, createUser }) {
+
+export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoading }) {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState("")
+	const [loginStatus, setLoginStatus] = useState("signIn")
+	const [snackBar, setSnackBar] = useState("")
+
+
+	useEffect(()=>{setSnackBar("")},[loginStatus])
+
+	const isSigninValidate = function(){
+		if(email === "" || password === ""){
+			setSnackBar("validationErr")
+			return false
+		}else{
+			return true
+		}
+		
+	}
+	const isSignupValidate = function(){
+		if(email === "" || password === "" || userName ==""){
+			setSnackBar("validationErr")
+			return false
+		}else{
+			return true
+		}	
+	}
 
 	const signUp = () => {
-		let user={userName, password}
-		createUser(user).then((data) => {
-			data.status === 200
-				? setCurrUser({ userName, password, id:data.data.id })
-				: console.log(data);
-		});
-	};
+		if(isSignupValidate()){
+			setIsLoading(true)			
+		    axios.post(`${API}/signup`, { userName, password, email }).then(async(response) => {
+				await fetchData(email)
+				 setCurrUser({userName, password, email})
+		}).catch((error)=>{
+			setIsLoading(false)	
+			alert(error)})
+	}}
 
 	const signIn = () => {
-		axios.post(`${API}/users`, { userName, password }).then((response) => {
-            console.log(response)
-			if (response.data.status !== 200) {
-				throw new Error(response.status);
-			}else{
-                setCurrUser({userName, password, id:response.data.id})
-				fetchData(userName)
-				initBalance(userName)
-				fetchCategoriesSum(userName)
-            }
-		}).catch(()=>alert("password or user name is incorret"))
+		if(isSigninValidate()){
+			setIsLoading(true)
+			axios.post(`${API}/signin`, { password, email }).then(async(response)  => {
+				await fetchData(email)
+				console.log("imh er")
+				setCurrUser({userName:response.data[0].userName, password, id:response.data[0].id, email})	  
+		}).catch((error)=>{
+			setIsLoading(false)
+			console.log(error)
+			if(error.response){
+				if(error.response.data === "Bad Request"){
+					alert("user not found")
+				}else if(error.response.data === "Unauthorized"){
+					alert("invalid password")
+				}
+			}
+			
+		})
+		}
 	};
 
-	return <div className="loginContainer">
-     <div className='loginForm'>
-    <div className='inputs'>
-    <input placeholder='user name' onChange={(e)=>setUserName(e.target.value)}></input>
-    <input type="password" placeholder='password' onChange={(e)=>setPassword(e.target.value)} ></input>
+	return <>
+	<div className="navbar"><p className="landingNavbar">Welcome To Your Transactions Manager</p></div>
+		{loginStatus === "signIn"? (<div className="loginContainer">
+		
+		{isLoading?<LoadingBar action={"signIn"} />:<></>}	
+		 
+			<div className='loginForm'>
+		<div className='inputs'>
+   	 <input className="emailInput" placeholder='email' onChange={(e)=>setEmail(e.target.value)}></input>
+    <input type="password" placeholder='password' onChange={(e)=>setPassword(e.target.value)} required ></input>
     </div>
     <div className='loginBtns'>
-      <button className="loginFormBtn" onClick={()=>{signUp()}}>sign up</button>
+       <button className="loginFormBtn" onClick={()=>{setLoginStatus("")}}>sign up</button>
     <button className="loginFormBtn" onClick={()=>signIn()}>sign in</button>
     </div>
   </div>
-    </div>;
+    </div>):(<div className="loginContainer">
+	{isLoading?<LoadingBar action={"signUp"} />:<></>}	
+     <div className='loginForm'>
+	 <button className="backBtn" onClick={()=>setLoginStatus("signIn")}>back</button>
+    <div className='inputs'>
+    <input placeholder='user name' onChange={(e)=>setUserName(e.target.value)}></input>
+    <input type="email" placeholder='email' onChange={(e)=>setEmail(e.target.value)} ></input>
+    <input type="password" placeholder='password' onChange={(e)=>setPassword(e.target.value)} ></input>
+    </div>
+    <div className='loginBtns'>
+      <button className="loginFormBtnSignUp" onClick={()=>{signUp()}}>sign up</button>
+    </div>
+  </div>
+    </div>)}
+		{snackBar === 'validationErr' ?<Snackbar
+						message="Fill all the fields please!"
+						actionText="dismiss"
+					/>:<></>}
+	</>
 }

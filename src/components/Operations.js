@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
-import { addTransaction } from "../apiManager";
+import { addTransaction } from "../server/apiManager";
 import { Snackbar } from "@material/react-snackbar";
+import { Progress, Footer } from "rsuite";
 import "@material/react-snackbar/dist/snackbar.css";
 
 export default function Operations({ fetchData, balance, currUser }) {
@@ -9,7 +10,22 @@ export default function Operations({ fetchData, balance, currUser }) {
 	const [vendor, setVendor] = useState("");
 	const [category, setCategory] = useState("");
 	const [snackbarStatus, setSnackStatus] = useState("");
+	const [percent, setPercent] = useState(0);
+	const [progressCircle, setProgressCircle] = useState(false);
 
+	useEffect(() => {
+		const interval = setInterval(() => {
+			if (percent >= 100) {
+				setPercent(0);
+			} else {
+				setPercent((p)=>p+1)
+			}
+		},130);
+
+		return () => {clearInterval(interval)}
+	}, [percent]);
+
+	const color = percent >= 80 ? "#03D613" : "#02749C";
 	const refresh = () => {
 		setAmount(0);
 		setCategory("");
@@ -19,6 +35,8 @@ export default function Operations({ fetchData, balance, currUser }) {
 	const checkValidation = (action) => {
 		if (amount != 0 && vendor != "" && category != "") {
 			handleAddTransaction(action);
+			setProgressCircle(true)
+			setPercent(0)
 		} else {
 			setSnackStatus("validationErr");
 		}
@@ -28,33 +46,31 @@ export default function Operations({ fetchData, balance, currUser }) {
 		let newTransaction = { amount, vendor, category};
 
 		addTransaction({ newTransaction, balance, action, currUser }).then((result) => {
+			setProgressCircle(false)
 			if (result.data.err) {
 				setSnackStatus("low balance");
 				return;
 			} else {
 				refresh()
 				setSnackStatus("added");
-				console.log(result.data.newBalance);
-				 fetchData(currUser.userName);
+				 fetchData(currUser.email);
 			}
 		});
 	};
 
-	console.log(snackbarStatus);
-
 	return (
 		<div>
 			<div className="operations">
-				Insert Transacions
-				<input
-					placeholder="Transaction amount"
+				Insert Transacion
+				<input className="operationsInput"
+					placeholder="amount"
 					onChange={(e) => setAmount(parseInt(e.target.value))}></input>
-				<input
-					placeholder="Transaction vendor"
+				<input className="operationsInput"
+					placeholder="vendor"
 					onChange={(e) => setVendor(e.target.value)}
 					value={vendor}></input>
-				<input
-					placeholder="Transaction category"
+				<input className="operationsInput"
+					placeholder="category"
 					onChange={(e) => setCategory(e.target.value)}
 					value={category}></input>
 				<div className="operationsBtns">
@@ -88,6 +104,12 @@ export default function Operations({ fetchData, balance, currUser }) {
 					<></>
 				)}
 			</div>
+				{progressCircle ? <Progress.Circle className="circleProgress"
+						showInfo={false}
+						percent={percent}
+						strokeColor={color}
+					/> :<></>}
+			
 		</div>
 	);
 }

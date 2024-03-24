@@ -2,7 +2,6 @@
 import { Link } from "react-router-dom";
 import Transaction from "./Transaction";
 
-
 export default function Transactions({ transactions, fetchData, currUser }) {
 console.log("transaco", transactions)
 	return (
