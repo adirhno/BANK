@@ -12,7 +12,7 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("")
-	const [loginStatus, setLoginStatus] = useState("signIn")
+	const [loginStatus, setLoginStatus] = useState("signIn") 
 	const [snackBar, setSnackBar] = useState("")
 
 
@@ -27,8 +27,6 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 				}).catch((error)=>{
 					setIsLoading(false)	
 					alert(error)})
-
-
 		})
 	}
 
@@ -97,7 +95,7 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
     <div className='loginBtns'>
        <button className="loginFormBtn" onClick={()=>{setLoginStatus("")}}>sign up</button>
     <button className="loginFormBtn" onClick={()=>signIn()}>sign in</button>
-    <button className="loginFormBtn" onClick={()=>signInWithGooglea()}>Google</button>
+    <button className="loginFormBtn google" onClick={()=>signInWithGooglea()}>Google</button>
     </div>
   </div>
     </div>):(<div className="loginContainer">
