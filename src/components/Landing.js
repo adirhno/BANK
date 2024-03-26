@@ -5,17 +5,30 @@ import { Snackbar } from "@material/react-snackbar";
 import "@material/react-snackbar/dist/snackbar.css";
 import { Progress } from "rsuite";
 import LoadingBar from "./LoadingBar";
-
+import { signInWithGoogle } from '../server/firebase/firebase'
+ 
 
 export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoading }) {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("")
-	const [loginStatus, setLoginStatus] = useState("signIn")
+	const [loginStatus, setLoginStatus] = useState("signIn") 
 	const [snackBar, setSnackBar] = useState("")
 
 
 	useEffect(()=>{setSnackBar("")},[loginStatus])
+	const signInWithGooglea = function(){
+		signInWithGoogle().then(({_tokenResponse})=>{
+			setIsLoading(true)			
+		    axios.post(`${API}/signup`, { withGoogle:true, userName: _tokenResponse.displayName, password: "", email: _tokenResponse.email }).then(async(response) => {
+				await fetchData(_tokenResponse.email)
+				 setCurrUser({userName:_tokenResponse.displayName, email:_tokenResponse.email})
+
+				}).catch((error)=>{
+					setIsLoading(false)	
+					alert(error)})
+		})
+	}
 
 	const isSigninValidate = function(){
 		if(email === "" || password === ""){
@@ -43,7 +56,8 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 				 setCurrUser({userName, password, email})
 		}).catch((error)=>{
 			setIsLoading(false)	
-			alert(error)})
+			console.log(error)
+			alert(error.response.data)})
 	}}
 
 	const signIn = () => {
@@ -51,7 +65,6 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 			setIsLoading(true)
 			axios.post(`${API}/signin`, { password, email }).then(async(response)  => {
 				await fetchData(email)
-				console.log("imh er")
 				setCurrUser({userName:response.data[0].userName, password, id:response.data[0].id, email})	  
 		}).catch((error)=>{
 			setIsLoading(false)
@@ -82,6 +95,7 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
     <div className='loginBtns'>
        <button className="loginFormBtn" onClick={()=>{setLoginStatus("")}}>sign up</button>
     <button className="loginFormBtn" onClick={()=>signIn()}>sign in</button>
+    <button className="loginFormBtn google" onClick={()=>signInWithGooglea()}>Google</button>
     </div>
   </div>
     </div>):(<div className="loginContainer">
