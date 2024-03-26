@@ -125,7 +125,7 @@ router.post("/signup", async function (req, res) {
 			}
 		}
 	} catch (error) {
-		res.status(400).send(error)
+		res.status(400).send(error);
 	}
 });
 
@@ -134,7 +134,7 @@ router.post("/signin", async function (req, res) {
 		const user = await User.find({ email: req.body.email });
 		if (user.length < 1) {
 			throw new Error();
-		} else if (user[0].password == req.body.password) {
+		} else if (user[0].password == req.body.password && !req.body.withGoogle) {
 			res.json(user);
 		} else {
 			res.sendStatus(401);
