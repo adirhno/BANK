@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const api=require('./routes/api')
 const port = process.env.PORT ;
-
  require('dotenv').config();
  
 mongoose.connect(process.env.MONGODB_URI, {
