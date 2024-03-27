@@ -6,7 +6,7 @@ const path = require("path");
 const api=require('./routes/api')
 const cors = require('cors');
 
-const port = process.env.PORT ;
+const port = process.env.PORT || 3001 ;
  require('dotenv').config();
  
 mongoose.connect(process.env.MONGODB_URI, {
