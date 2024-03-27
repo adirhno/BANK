@@ -38,6 +38,9 @@
 		"eject": "react-scripts eject",
 		"serve": "--max_old_space_size=8192'"
 	},
+	"engines": {
+		"node": "21.5.0"
+	},
 	"eslintConfig": {
 		"extends": [
 			"react-app",
