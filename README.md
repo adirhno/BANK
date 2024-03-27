@@ -1,17 +1,11 @@
-# Getting Started with Create React App
+# Bank Transactions App.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+this app help you to manage your expenses and revenues.
 
-## Available Scripts
+## Built with: 
 
-In the project directory, you can run:
+### NodeJs, ReactJs, MongoDB, JavaScript.
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
 
