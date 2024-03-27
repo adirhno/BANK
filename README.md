@@ -3,9 +3,13 @@
 this app help you to manage your expenses and revenues.
 
 ## Built with: 
+- NodeJs
+- ReactJs
+- MongoDB
+- JavaScript
+- Firebase authentication
 
-### NodeJs, ReactJs, MongoDB, JavaScript.
-
-
+## Links:
+Website URL : [Bank Transactions](https://bank-transactions-xjkk.onrender.com)
 
 
