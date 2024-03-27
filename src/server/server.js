@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const api=require('./routes/api')
+const cors = require('cors');
+
 const port = process.env.PORT ;
  require('dotenv').config();
  
@@ -14,6 +16,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 	.then(() => console.log("conneted to DB"))
 	.catch((err) => console.log(err));
 
+
+app.use(cors())
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
