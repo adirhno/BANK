@@ -17,6 +17,10 @@ router.get("/home/:user", async function (req, res) {
 	}
 });
 
+	router.get('/',function(req,res){
+		res.send("yas")
+	})
+
 router.post("/transactions", function (req, res) {
 	let transacion = req.body;
 	let balance = req.body.balance;
