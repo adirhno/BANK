@@ -25,6 +25,6 @@ app.use(bodyParser.json());
 app.use(api);
 
 const PORT = 3001;
-app.listen(process.env.MONGODB_URI | PORT, function () {
+app.listen(process.env.PORT | PORT, function () {
 	console.log("Server up and running on port ",PORT);
 });
