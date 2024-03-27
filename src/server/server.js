@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const api=require('./routes/api')
+const port = process.env.PORT || 3001;
 
  require('dotenv').config();
  
@@ -24,7 +25,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(api);
 
-const PORT = 3001;
-app.listen(process.env.PORT | PORT, function () {
-	console.log("Server up and running on port ",PORT);
+app.listen(port, function () {
+	console.log("Server up and running on port ",port);
 });
