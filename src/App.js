@@ -2,7 +2,7 @@ import "./App.css";
 import Transactions from "./components/Transactions";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, } from "react-router-dom";
 import Operations from "./components/Operations";
 import Breakdown from "./components/Breakdown";
 import { getBalance, breakdown, getAllTransactions } from "../src/server/apiManager";
