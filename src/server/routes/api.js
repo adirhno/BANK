@@ -4,6 +4,8 @@ const Transaction = require("../models/Transaction");
 const User = require("../models/User");
 const { calculateCategoryAmount } = require("../config");
 const validator = require("validator");
+const passwordValidator = require('password-validator');
+const passwordValidatorSchema = new passwordValidator();
 
 router.get("/home/:user", async function (req, res) {
 	try {
@@ -108,6 +110,7 @@ router.get("/balance/:user", async function (req, res) {
 });
 
 router.post("/signup", async function (req, res) {
+	passwordValidatorSchema.has().not().spaces().is().min(8) 	
 	let userDetails = req.body;
 	try {
 		const user = await User.find({ email: userDetails.email });
@@ -119,11 +122,15 @@ router.post("/signup", async function (req, res) {
 			}
 		} else {
 			if (validator.isEmail(userDetails.email)) {
-				userDetails["transactions"] = [];
-				userDetails["balance"] = 0;
-				let u1 = new User(userDetails);
-				u1.save();
-				res.sendStatus(200);
+				if(passwordValidatorSchema.validate(userDetails.password)){
+						userDetails["transactions"] = [];
+						userDetails["balance"] = 0;
+						let u1 = new User(userDetails);
+						u1.save();
+						res.sendStatus(200);
+				}else{
+					throw "invalid password!"
+				}
 			} else {
 				throw "invalid email!";
 			}
