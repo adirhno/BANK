@@ -6,8 +6,11 @@ const { calculateCategoryAmount } = require("../config");
 const validator = require("validator");
 const passwordValidator = require('password-validator');
 const passwordValidatorSchema = new passwordValidator();
+const jwt = require("jsonwebtoken");
+const { authorizationMiddleWare } = require("../middlewares/auth.middleware");
+const serialize = require("cookie");
 
-router.get("/home/:user", async function (req, res) {
+router.get("/home/:user",authorizationMiddleWare, async function (req, res) {
 	try {
 		const user = await User.findOne({ email: `${req.params.user}` })
 			.select("transactions")
@@ -23,7 +26,7 @@ router.get("/home/:user", async function (req, res) {
 		res.send("yas")
 	})
 
-router.post("/transactions", function (req, res) {
+router.post("/transactions",authorizationMiddleWare, function (req, res) {
 	let transacion = req.body;
 	let balance = req.body.balance;
 	let amount = transacion.newTransaction.amount;
@@ -69,7 +72,7 @@ router.post("/breakdown", function (req, res) {
 	}).then((transactions) => res.send(transactions));
 });
 
-router.get("/breakdown/:user", async function (req, res) {
+router.get("/breakdown/:user",authorizationMiddleWare, async function (req, res) {
 	let categoriesObj = {};
 	let categoriesArr = [];
 	const transactions = await User.findOne({ email: req.params.user })
@@ -141,11 +144,20 @@ router.post("/signup", async function (req, res) {
 });
 
 router.post("/signin", async function (req, res) {
+	
 	try {
 		const user = await User.find({ email: req.body.email });
 		if (user.length < 1) {
 			throw new Error();
 		} else if (user[0].password == req.body.password && !req.body.withGoogle) {
+		const token = jwt.sign({user:req.body.email}, "hello", {
+            expiresIn: '20s'
+        })
+	
+		res.cookie("token", token,{
+			httpOnly:true,
+			maxAge: 900000 
+		});
 			res.json(user);
 		} else {
 			res.sendStatus(401);

@@ -2,23 +2,33 @@ import axios from "axios";
 import {API} from '../server/config'
 
 const getBalance=function(user){
-  return  axios.get(`${API}/balance/${user}`)
+  return axios.get(`${API}/balance/${user}`,{
+    withCredentials: true
+})
 }
 
 const breakdown=function(user){
-    return axios.get(`${API}/breakdown/${user}`)
+    return axios.get(`${API}/breakdown/${user}`,{
+    withCredentials: true
+})
 }
 
 const getAllTransactions=function(user){
-    return axios.get(`${API}/home/${user}`)
+    return axios.get(`${API}/home/${user}`,{
+    withCredentials: true
+})
 }
 
 const addTransaction= function(transaction){
-    return axios.post(`${API}/transactions`,transaction)
+    return axios.post(`${API}/transactions`,transaction, {
+    withCredentials: true
+})
 }
 
 const deleteTransaction= function (transactionId){
-    return axios.get(`${API}/transactions/${transactionId}`)
+    return axios.get(`${API}/transactions/${transactionId}`,{
+    withCredentials: true
+})
 }
 
 const createUser = (user) =>{

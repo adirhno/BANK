@@ -64,7 +64,9 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 	const signIn = () => {
 		if(isSigninValidate()){
 			setIsLoading(true)
-			axios.post(`${API}/signin`, { password, email }).then(async(response)  => {
+			axios.post(`${API}/signin`, { password, email }, {
+    withCredentials: true
+}).then(async(response)  => {
 				await fetchData(email)
 				setCurrUser({userName:response.data[0].userName, password, id:response.data[0].id, email})	  
 		}).catch((error)=>{
