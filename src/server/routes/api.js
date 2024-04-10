@@ -22,9 +22,9 @@ router.get("/home/:user",authorizationMiddleWare, async function (req, res) {
 	}
 });
 
-	router.get('/',function(req,res){
-		res.send("yas")
-	})
+router.get('/auth', authorizationMiddleWare, function(req, res){
+	res.send({auth:true})
+})
 
 router.post("/transactions",authorizationMiddleWare, function (req, res) {
 	let transacion = req.body;
@@ -106,7 +106,7 @@ router.get("/balance/:user", async function (req, res) {
 		let allCategories = balance.transactions;
 		let sum = 0;
 		allCategories.map((c) => (sum += c.amount));
-		res.send({ sum: sum });
+		res.send({ sum});
 	} catch (error) {
 		res.sendStatus(400);
 	}
@@ -130,7 +130,16 @@ router.post("/signup", async function (req, res) {
 						userDetails["balance"] = 0;
 						let u1 = new User(userDetails);
 						u1.save();
-						res.sendStatus(200);
+
+						const token = jwt.sign({user:userDetails.email}, "hello", {
+            			expiresIn: '120s'
+   					     })
+						res.cookie("token", token,{
+							httpOnly:true,
+							maxAge: 100000
+						});
+						res.sendStatus(200)
+
 				}else{
 					throw "invalid password!"
 				}
@@ -143,20 +152,23 @@ router.post("/signup", async function (req, res) {
 	}
 });
 
+router.get("/logout", function(req,res){
+	res.clearCookie("token").send("token cleared!");
+})
+
 router.post("/signin", async function (req, res) {
-	
 	try {
 		const user = await User.find({ email: req.body.email });
 		if (user.length < 1) {
 			throw new Error();
 		} else if (user[0].password == req.body.password && !req.body.withGoogle) {
-		const token = jwt.sign({user:req.body.email}, "hello", {
-            expiresIn: '20s'
+			const token = jwt.sign({user:req.body.email}, "hello", {
+            expiresIn: '120s'
         })
-	
+		user['token']=token
 		res.cookie("token", token,{
 			httpOnly:true,
-			maxAge: 900000 
+			maxAge: 100000
 		});
 			res.json(user);
 		} else {

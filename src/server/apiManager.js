@@ -13,6 +13,10 @@ const breakdown=function(user){
 })
 }
 
+const signInReq = function(password ,email){
+    return axios.post(`${API}/signin`, { password, email},  { withCredentials: true })
+}
+
 const getAllTransactions=function(user){
     return axios.get(`${API}/home/${user}`,{
     withCredentials: true
@@ -35,4 +39,4 @@ const createUser = (user) =>{
    return axios.post(`${API}/signup`,user)
 }
 
-export {getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction, createUser}
+export {getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction, createUser, signInReq}

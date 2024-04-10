@@ -1,20 +1,16 @@
-
 const jwt = require("jsonwebtoken");
 
 function authorizationMiddleWare(req, res, next) {
-
-    const { token } = req.cookies
+	const { token } = req.cookies;
 	try {
 		const payload = jwt.verify(token, "hello");
-        if(payload){
-            
-        }
-        next()
+		if (payload) {
+			console.log("here1")
+			next();
+		}
 	} catch (error) {
-		res.clearCookie("token")
-			.status(401)
-			.send("Invalid JWT token!");
+		res.clearCookie("token").send("Invalid JWT token!");
 	}
 }
 
-module.exports = {authorizationMiddleWare}
+module.exports = { authorizationMiddleWare };
