@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Transaction from "./Transaction";
 
 export default function Transactions({ transactions, fetchData, currUser }) {
-console.log("transaco", transactions)
 	return (
 		<>
 		{transactions.length > 0?	<div className="transactions">

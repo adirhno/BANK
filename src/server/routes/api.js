@@ -48,9 +48,9 @@ router.post("/transactions",authorizationMiddleWare, function (req, res) {
 	newTransaciona.save();
 
 	User.findOneAndUpdate(
-		{ email: req.body.currUser.email },
+		{ email: req.body.currUser },
 		{ $push: { transactions: newTransaciona } }
-	).then((e) => console.log("oushed", e));
+	).exec();
 
 	res.send({ newBalance: newBalance });
 });
@@ -78,7 +78,7 @@ router.get("/breakdown/:user",authorizationMiddleWare, async function (req, res)
 	const transactions = await User.findOne({ email: req.params.user })
 		.select("transactions")
 		.populate("transactions");
-	transactions.transactions.map(
+		transactions.transactions.map(
 		(t) => (categoriesObj[t.category] = t.category)
 	);
 
@@ -132,11 +132,11 @@ router.post("/signup", async function (req, res) {
 						u1.save();
 
 						const token = jwt.sign({user:userDetails.email}, "hello", {
-            			expiresIn: '120s'
+            			expiresIn: '2h'
    					     })
 						res.cookie("token", token,{
 							httpOnly:true,
-							maxAge: 100000
+							maxAge: 900000
 						});
 						res.sendStatus(200)
 
@@ -160,7 +160,7 @@ router.post("/signin", async function (req, res) {
 	try {
 		const user = await User.find({ email: req.body.email });
 		if (user.length < 1) {
-			throw new Error();
+			res.sendStatus(400)
 		} else if (user[0].password == req.body.password && !req.body.withGoogle) {
 			const token = jwt.sign({user:req.body.email}, "hello", {
             expiresIn: '120s'

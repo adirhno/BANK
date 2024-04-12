@@ -5,13 +5,14 @@ import { Snackbar } from "@material/react-snackbar";
 import { Progress, Footer } from "rsuite";
 import "@material/react-snackbar/dist/snackbar.css";
 
-export default function Operations({ fetchData, balance, currUser }) {
+export default function Operations({ fetchData, balance }) {
 	const [amount, setAmount] = useState(0);
 	const [vendor, setVendor] = useState("");
 	const [category, setCategory] = useState("");
 	const [snackbarStatus, setSnackStatus] = useState("");
 	const [percent, setPercent] = useState(0);
 	const [progressCircle, setProgressCircle] = useState(false);
+	const currUser = localStorage.getItem("userEmail")
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -53,7 +54,7 @@ export default function Operations({ fetchData, balance, currUser }) {
 			} else {
 				refresh()
 				setSnackStatus("added");
-				 fetchData(currUser.email);
+				 fetchData(currUser);
 			}
 		});
 	};

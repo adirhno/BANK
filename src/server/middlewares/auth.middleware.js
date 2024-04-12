@@ -5,7 +5,6 @@ function authorizationMiddleWare(req, res, next) {
 	try {
 		const payload = jwt.verify(token, "hello");
 		if (payload) {
-			console.log("here1")
 			next();
 		}
 	} catch (error) {
