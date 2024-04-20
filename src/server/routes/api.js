@@ -18,12 +18,12 @@ router.get("/home/:user",authorizationMiddleWare, async function (req, res) {
 
 		res.send(user.transactions);
 	} catch (error) {
-		
+		console.log(error)
 		res.redirect('/');
 	}
 });
 
-router.get('/', function(req, res){
+router.get('/', authorizationMiddleWare, function(req, res){
 	res.send({auth:true})
 })
 
