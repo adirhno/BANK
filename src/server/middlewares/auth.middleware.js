@@ -26,19 +26,7 @@ function authorizationMiddleWare(req, res, next) {
 					res.clearCookie("token").send("Invalid JWT token!");
 				}
 			}
-		} else {
-			const refreshToken = jwt.verify(refresh, "refresh");
-			if (refreshToken) {
-				const newToken = jwt.sign({ user: user }, "token", {
-					expiresIn: "100s",
-				});
-				res.cookie("token", newToken, {
-					httpOnly: true,
-					maxAge: 900000,
-				});
-				next();
-			}
-		}
+		} 
 	} catch (error) {
 		console.log(error);
 		res.clearCookie("token").send("Invalid JWT token!");

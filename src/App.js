@@ -20,7 +20,7 @@ function App() {
 	const [auth, setAuth] = useState(false);
 
 	useEffect(()=>{
-		axios.get(`${API}/auth`, {withCredentials: true}).then((res)=>{	
+		axios.get(`${API}/`, {withCredentials: true}).then((res)=>{	
 		if(res.data.auth){
 	    	fetchData(localStorage.getItem("userEmail"))
 			setAuth(true)
