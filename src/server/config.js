@@ -1,5 +1,5 @@
 const { default: axios } = require("axios");
-const API = "https://bank-g61v.onrender.com";
+const API = "https://bank-transactions-xjkk.onrender.com";
 
 
 const calculateCategoryAmount = function (category) {
