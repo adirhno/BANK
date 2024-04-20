@@ -23,7 +23,7 @@ router.get("/home/:user",authorizationMiddleWare, async function (req, res) {
 	}
 });
 
-router.get('/', authorizationMiddleWare, function(req, res){
+router.get('/auth', authorizationMiddleWare, function(req, res){
 	res.send({auth:true})
 })
 
