@@ -138,7 +138,7 @@ router.post("/signup", async function (req, res) {
 
 						const refreshToken = jwt.sign({user:userDetails.email}, "refresh")
 						
-						res.cookie("token", token,{
+						res.cookie("token", `bearer ${token}`,{
 							httpOnly:true,
 							maxAge: 900000
 						}).res.cookie("refresh", refreshToken,{
@@ -178,7 +178,7 @@ router.post("/signin", async function (req, res) {
 		user['token']=token
 		res.cookie("token", token,{
 			httpOnly:true,
-			maxAge: 100000
+			maxAge: 900000
 		}).cookie("refresh", refreshToken, {
 			httpOnly:true,
 			maxAge: 900000

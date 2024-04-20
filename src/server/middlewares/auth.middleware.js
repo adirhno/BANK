@@ -7,17 +7,15 @@ function authorizationMiddleWare(req, res, next) {
 
 	try {
 		if (token !== undefined) {
-			console.log("im here")
-			const payload = jwt.verify(token, "token", (e) => {
-				console.log(e);
-			});
+			console.log("im here");
+			const payload = jwt.verify(token, "token", (e) => {});
 			if (payload) {
 				next();
 			} else {
 				const refreshToken = jwt.verify(refresh, "refresh");
 				if (refreshToken) {
 					const newToken = jwt.sign({ user: user }, "token", {
-						expiresIn: "30s",
+						expiresIn: "100s",
 					});
 					res.cookie("token", newToken, {
 						httpOnly: true,
@@ -32,7 +30,7 @@ function authorizationMiddleWare(req, res, next) {
 			const refreshToken = jwt.verify(refresh, "refresh");
 			if (refreshToken) {
 				const newToken = jwt.sign({ user: user }, "token", {
-					expiresIn: "30s",
+					expiresIn: "100s",
 				});
 				res.cookie("token", newToken, {
 					httpOnly: true,
@@ -42,33 +40,9 @@ function authorizationMiddleWare(req, res, next) {
 			}
 		}
 	} catch (error) {
-		console.log(error)
+		console.log(error);
 		res.clearCookie("token").send("Invalid JWT token!");
 	}
 }
-
-// if (token === undefined) {
-// 			console.log("inside ")
-// 			const refreshToken = jwt.verify(refresh, "refresh");
-// 			if (refreshToken) {
-
-// 				const newToken = jwt.sign({ user: user }, "token", {
-// 					expiresIn: "30s",
-// 				});
-// 				res.cookie("token", newToken, {
-// 					httpOnly: true,
-// 					maxAge: 900000,
-// 				});
-// 				next();
-// 			} else {
-// 				res.clearCookie("token").send("Invalid JWT token!");
-// 			}
-// 		} else {
-// 			const payload = jwt.verify(token, "token");
-// 			console.log(payload)
-// 			if (payload) {
-// 				next();
-// 			}
-// 		}
 
 module.exports = { authorizationMiddleWare };
