@@ -18,6 +18,7 @@ router.get("/home/:user",authorizationMiddleWare, async function (req, res) {
 
 		res.send(user.transactions);
 	} catch (error) {
+		console.log(error)
 		res.redirect('/');
 	}
 });
@@ -169,6 +170,7 @@ router.post("/signin", async function (req, res) {
 		if (user.length < 1) {
 			res.sendStatus(400)
 		} else if (user[0].password == req.body.password && !req.body.withGoogle) {
+
 			const token = jwt.sign({user:req.body.email}, "token", {
             expiresIn: '12s'
         })

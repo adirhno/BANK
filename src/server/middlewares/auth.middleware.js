@@ -16,7 +16,7 @@ function authorizationMiddleWare(req, res, next) {
 				const refreshToken = jwt.verify(refresh, "refresh");
 				if (refreshToken) {
 					const newToken = jwt.sign({ user: user }, "token", {
-						expiresIn: "10s",
+						expiresIn: "30s",
 					});
 					res.cookie("token", newToken, {
 						httpOnly: true,
@@ -31,7 +31,7 @@ function authorizationMiddleWare(req, res, next) {
 			const refreshToken = jwt.verify(refresh, "refresh");
 			if (refreshToken) {
 				const newToken = jwt.sign({ user: user }, "token", {
-					expiresIn: "10s",
+					expiresIn: "30s",
 				});
 				res.cookie("token", newToken, {
 					httpOnly: true,
