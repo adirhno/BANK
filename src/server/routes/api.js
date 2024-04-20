@@ -18,12 +18,12 @@ router.get("/home/:user",authorizationMiddleWare, async function (req, res) {
 
 		res.send(user.transactions);
 	} catch (error) {
-		console.log(error)
+		
 		res.redirect('/');
 	}
 });
 
-router.get('/', authorizationMiddleWare, function(req, res){
+router.get('/', function(req, res){
 	res.send({auth:true})
 })
 
@@ -138,7 +138,7 @@ router.post("/signup", async function (req, res) {
 
 						const refreshToken = jwt.sign({user:userDetails.email}, "refresh")
 						
-						res.cookie("token", `bearer ${token}`,{
+						res.cookie("token", `${token}`,{
 							httpOnly:true,
 							maxAge: 900000
 						}).res.cookie("refresh", refreshToken,{
