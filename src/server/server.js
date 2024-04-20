@@ -5,7 +5,8 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const api=require('./routes/api')
 const cors = require('cors');
-const cookieParser = require("cookie-parser")
+const cookieParser = require("cookie-parser");
+const { API } = require('./config');
 
 const port = process.env.PORT || 3001 ;
  require('dotenv').config();
@@ -18,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 	.catch((err) => console.log(err));
 
 app.use(cookieParser());
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
+app.use(cors({credentials: true, origin: `${API}`}))
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
