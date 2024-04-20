@@ -18,15 +18,15 @@ router.get("/home/:user",authorizationMiddleWare, async function (req, res) {
 
 		res.send(user.transactions);
 	} catch (error) {
-		res.sendStatus(400);
+		res.redirect('/');
 	}
 });
 
-router.get('/auth', authorizationMiddleWare, function(req, res){
+router.get('/', authorizationMiddleWare, function(req, res){
 	res.send({auth:true})
 })
 
-router.post("/transactions",authorizationMiddleWare, function (req, res) {
+router.post("/transactions", function (req, res) {
 	let transacion = req.body;
 	let balance = req.body.balance;
 	let amount = transacion.newTransaction.amount;
@@ -72,7 +72,7 @@ router.post("/breakdown", function (req, res) {
 	}).then((transactions) => res.send(transactions));
 });
 
-router.get("/breakdown/:user",authorizationMiddleWare, async function (req, res) {
+router.get("/breakdown/:user", async function (req, res) {
 	let categoriesObj = {};
 	let categoriesArr = [];
 	const transactions = await User.findOne({ email: req.params.user })
@@ -131,14 +131,21 @@ router.post("/signup", async function (req, res) {
 						let u1 = new User(userDetails);
 						u1.save();
 
-						const token = jwt.sign({user:userDetails.email}, "hello", {
-            			expiresIn: '2h'
+						const token = jwt.sign({user:userDetails.email}, "token", {
+            			expiresIn: '15s'
    					     })
+
+						const refreshToken = jwt.sign({user:userDetails.email}, "refresh")
+						
 						res.cookie("token", token,{
 							httpOnly:true,
 							maxAge: 900000
+						}).res.cookie("refresh", refreshToken,{
+							httpOnly:true,
+							maxAge: 900000
 						});
-						res.sendStatus(200)
+
+						res.json({user: userDetails, token:token, refreshToken:refreshToken})
 
 				}else{
 					throw "invalid password!"
@@ -153,7 +160,7 @@ router.post("/signup", async function (req, res) {
 });
 
 router.get("/logout", function(req,res){
-	res.clearCookie("token").send("token cleared!");
+	res.clearCookie("token").clearCookie("refresh").send("token cleared!");
 })
 
 router.post("/signin", async function (req, res) {
@@ -162,15 +169,22 @@ router.post("/signin", async function (req, res) {
 		if (user.length < 1) {
 			res.sendStatus(400)
 		} else if (user[0].password == req.body.password && !req.body.withGoogle) {
-			const token = jwt.sign({user:req.body.email}, "hello", {
-            expiresIn: '120s'
+			const token = jwt.sign({user:req.body.email}, "token", {
+            expiresIn: '12s'
         })
+			const refreshToken = jwt.sign({user:req.body.email}, "refresh")
 		user['token']=token
 		res.cookie("token", token,{
 			httpOnly:true,
 			maxAge: 100000
+		}).cookie("refresh", refreshToken, {
+			httpOnly:true,
+			maxAge: 900000
+		}).cookie("user", req.body.email, {
+			httpOnly:true,
+			maxAge: 900000
 		});
-			res.json(user);
+			res.json({refreshToken,user});
 		} else {
 			res.sendStatus(401);
 		}

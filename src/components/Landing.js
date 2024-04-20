@@ -7,7 +7,7 @@ import LoadingBar from "./LoadingBar";
 import { signInWithGoogle } from "../server/firebase/firebase";
 import { signInReq } from "../server/apiManager";
 
-export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoading }) {
+export default function Landing({setCurrUser, fetchData, setIsLoading, isLoading}) {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
@@ -18,44 +18,59 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 		setSnackBar("");
 	}, [loginStatus]);
 
+
+	const isSignupValidate = function (email, password, userName) {
+		if (email === "" || password === "" || userName === "") {
+			setSnackBar("validationErr");
+			return false;
+		} else {
+			return true;
+		}
+	};
+
+	const isSigninValidate = function (email, password) {
+	if (email === "" || password === "") {
+		setSnackBar("validationErr");
+		return false;
+	} else {
+		return true;
+	}
+};
+
+
 	const signInWithGoogleFunc = function () {
 		signInWithGoogle().then(({ _tokenResponse }) => {
 			setIsLoading(true);
-			axios.post(`${API}/signup`, {withGoogle: true, userName: _tokenResponse.displayName, password: "", email: _tokenResponse.email}).then(async () => {
+			axios.post(`${API}/signup`, {
+					withGoogle: true,
+					userName: _tokenResponse.displayName,
+					password: "",
+					email: _tokenResponse.email,
+				})
+				.then(async () => {
 					await fetchData(_tokenResponse.email);
 					setCurrUser({
 						userName: _tokenResponse.displayName,
 						email: _tokenResponse.email,
 					});
-				}).catch((error) => {
+				})
+				.catch((error) => {
 					setIsLoading(false);
 					alert(error);
 				});
 		});
 	};
 
-	const isSigninValidate = function () {
-		if (email === "" || password === "") {
-			setSnackBar("validationErr");
-			return false;
-		} else {
-			return true;
-		}
-	};
-
-	const isSignupValidate = function () {
-		if (email === "" || password === "" || userName == "") {
-			setSnackBar("validationErr");
-			return false;
-		} else {
-			return true;
-		}
-	};
-
 	const signUp = () => {
-		if (isSignupValidate()) {
+		if (isSignupValidate(email, password, userName)) {
 			setIsLoading(true);
-			axios.post(`${API}/signup`, { userName, password, email }, {withCredentials: true}).then(async (response) => {
+			axios
+				.post(
+					`${API}/signup`,
+					{ userName, password, email },
+					{ withCredentials: true }
+				)
+				.then(async () => {
 					localStorage.setItem("user", userName);
 					localStorage.setItem("userEmail", email);
 					await fetchData(email);
@@ -69,13 +84,16 @@ export default function Landing({ setCurrUser, fetchData, setIsLoading, isLoadin
 	};
 
 	const signIn = () => {
-		if (isSigninValidate()) {
+		if (isSigninValidate(email, password)) {
 			setIsLoading(true);
-			signInReq(password, email).then(async (response) => {
-					localStorage.setItem("userEmail", response.data[0].email);
-					localStorage.setItem("user", response.data[0].userName);
+			signInReq(password, email)
+				.then(async (response) => {
+					console.log(response);
+					localStorage.setItem("userEmail", response.data.user[0].email);
+					localStorage.setItem("user", response.data.user[0].userName);
 					await fetchData(email);
-					}).catch((error) => {
+				})
+				.catch((error) => {
 					setIsLoading(false);
 					console.log(error);
 					if (error.response) {

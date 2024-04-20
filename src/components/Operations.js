@@ -33,6 +33,24 @@ export default function Operations({ fetchData, balance }) {
 		setVendor("");
 	};
 
+	const handleAddTransaction = function (action) {
+	let newTransaction = { amount, vendor, category };
+
+	addTransaction({ newTransaction, balance, action, currUser }).then(
+		(result) => {
+			setProgressCircle(false);
+			if (result.data.err) {
+				setSnackStatus("low balance");
+				return;
+			} else {
+				refresh();
+				setSnackStatus("added");
+				fetchData(currUser);
+			}
+		}
+	);
+};
+
 	const checkValidation = (action) => {
 		if (amount != 0 && vendor != "" && category != "") {
 			handleAddTransaction(action);
@@ -41,22 +59,6 @@ export default function Operations({ fetchData, balance }) {
 		} else {
 			setSnackStatus("validationErr");
 		}
-	};
-
-	const handleAddTransaction = function (action) {
-		let newTransaction = { amount, vendor, category};
-
-		addTransaction({ newTransaction, balance, action, currUser }).then((result) => {
-			setProgressCircle(false)
-			if (result.data.err) {
-				setSnackStatus("low balance");
-				return;
-			} else {
-				refresh()
-				setSnackStatus("added");
-				 fetchData(currUser);
-			}
-		});
 	};
 
 	return (

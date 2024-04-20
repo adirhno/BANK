@@ -20,11 +20,11 @@ function App() {
 	const [auth, setAuth] = useState(false);
 
 	useEffect(()=>{
-		axios.get(`${API}/auth`, {withCredentials: true}).then((res)=>{	
+		axios.get(`${API}/`, {withCredentials: true}).then((res)=>{	
 		if(res.data.auth){
 	    	fetchData(localStorage.getItem("userEmail"))
-			setAuth(true)} 
-			else{setAuth(false)}})},[auth])
+			setAuth(true)
+		} else{setAuth(false)}})},[])
 
 	const initBalance = async function (userEmail) {
 		await getBalance(userEmail).then((results) => {
