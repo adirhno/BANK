@@ -27,18 +27,20 @@ function authorizationMiddleWare(req, res, next) {
 				}
 			}
 		} else {
-			const refreshToken = jwt.verify(refresh, "refresh");
-			if (refreshToken) {
-				const newToken = jwt.sign({ user: user }, "token", {
-					expiresIn: "100s",
-				});
-				res.cookie("token", newToken, {
-					httpOnly: true,
-					maxAge: 900000,
-				});
-				next();
+			if (!user) {
+				res.send("not yet");
 			} else {
-				next();
+				const refreshToken = jwt.verify(refresh, "refresh");
+				if (refreshToken) {
+					const newToken = jwt.sign({ user: user }, "token", {
+						expiresIn: "100s",
+					});
+					res.cookie("token", newToken, {
+						httpOnly: true,
+						maxAge: 900000,
+					});
+					next();
+				}
 			}
 		}
 	} catch (error) {

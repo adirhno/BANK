@@ -20,25 +20,22 @@ function App() {
 	const [auth, setAuth] = useState(false);
 
 	useEffect(()=>{
-		// axios.get(`${API}/`, {withCredentials: true}).then((res)=>{	
-		// if(res.data.auth){
-	    // 	fetchData(localStorage.getItem("userEmail"))
-		// 	setAuth(true)
-		// } else{setAuth(false)}}
+		axios.get(`${API}/`, {withCredentials: true}).then((res)=>{	
+		if(res.data.auth){
+	    	fetchData(localStorage.getItem("userEmail"))
+			setAuth(true)
+		} else{setAuth(false)}}
 		
-		// )
-		},[])
+		)},[])
 
 	const initBalance = async function (userEmail) {
 		await getBalance(userEmail).then((results) => {
-			setAuth(true)
 			setBalance(results.data.sum);
 		});
 	};
 
 	const fetchCategoriesSum = async function (userEmail) {
 		await breakdown(userEmail).then((results) => {
-			setAuth(true)
 				setCategoriesSum(results);
 		});
 	};
