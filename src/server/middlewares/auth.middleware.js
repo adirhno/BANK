@@ -6,7 +6,7 @@ function authorizationMiddleWare(req, res, next) {
 	const { user } = req.cookies;
 
 	try {
-		if (token !== undefined) {
+		if (token !== undefined) {		
 			console.log("im here");
 			const payload = jwt.verify(token, "token", (e) => {});
 			if (payload) {
@@ -26,7 +26,10 @@ function authorizationMiddleWare(req, res, next) {
 					res.clearCookie("token").send("Invalid JWT token!");
 				}
 			}
-		} 
+		} else{
+			res.send("not yet")
+		}
+		
 	} catch (error) {
 		console.log(error);
 		res.clearCookie("token").send("Invalid JWT token!");
