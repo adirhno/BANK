@@ -63,7 +63,7 @@ router.get("/transactions/:id", function (req, res) {
 	res.send("transaction deleted succeffuly");
 });
 
-router.post("/breakdown", function (req, res) {
+router.post("/breakdown",authorizationMiddleWare, function (req, res) {
 	let date = req.body;
 	Transaction.find({
 		createdAt: {
@@ -73,7 +73,7 @@ router.post("/breakdown", function (req, res) {
 	}).then((transactions) => res.send(transactions));
 });
 
-router.get("/breakdown/:user", async function (req, res) {
+router.get("/breakdown/:user",authorizationMiddleWare, async function (req, res) {
 	let categoriesObj = {};
 	let categoriesArr = [];
 	const transactions = await User.findOne({ email: req.params.user })

@@ -38,7 +38,7 @@ function authorizationMiddleWare(req, res, next) {
 				});
 				next();
 			} else {
-				res.clearCookie("token").send("Invalid JWT token!");
+				next();
 			}
 		}
 	} catch (error) {

@@ -7,7 +7,7 @@ import LoadingBar from "./LoadingBar";
 import { signInWithGoogle } from "../server/firebase/firebase";
 import { signInReq } from "../server/apiManager";
 
-export default function Landing({setCurrUser, fetchData, setIsLoading, isLoading}) {
+export default function Landing({setCurrUser, fetchData, setIsLoading, isLoading, setAuth}) {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
@@ -74,6 +74,7 @@ export default function Landing({setCurrUser, fetchData, setIsLoading, isLoading
 					localStorage.setItem("user", userName);
 					localStorage.setItem("userEmail", email);
 					await fetchData(email);
+					setAuth(true)
 				})
 				.catch((error) => {
 					setIsLoading(false);
@@ -92,6 +93,7 @@ export default function Landing({setCurrUser, fetchData, setIsLoading, isLoading
 					localStorage.setItem("userEmail", response.data.user[0].email);
 					localStorage.setItem("user", response.data.user[0].userName);
 					await fetchData(email);
+					setAuth(true)
 				})
 				.catch((error) => {
 					setIsLoading(false);
