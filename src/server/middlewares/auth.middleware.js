@@ -4,7 +4,9 @@ function authorizationMiddleWare(req, res, next) {
 	const { token } = req.cookies;
 	const { refresh } = req.cookies;
 	const { user } = req.cookies;
-
+	console.log(token)
+	console.log(refresh)
+	console.log(user)
 	try {
 		if (token !== undefined) {
 			console.log("im here");
