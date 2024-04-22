@@ -5,6 +5,7 @@ function authorizationMiddleWare(req, res, next) {
 	const { user } = req.cookies;
 
 	try {
+		console.log(token)
 		const payload = jwt.verify(token, "token");
 		if (payload) {
 			next()
