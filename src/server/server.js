@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 	//  "mongodb://localhost:27017/bank"
 	.then(() => console.log("conneted to DB"))
 	.catch((err) => console.log(err));
-
+app.use(cors({credentials: true, origin: `https://bank-transactions-xjkk.onrender.com`}))
 app.use(cookieParser());
 
 app.use(function (req, res, next) {
@@ -25,7 +25,7 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
     next()
 })
-app.use(cors({credentials: true, origin: `https://bank-transactions-xjkk.onrender.com`}))
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(api);
