@@ -17,11 +17,12 @@ mongoose.connect(process.env.MONGODB_URI, {
 	//  "mongodb://localhost:27017/bank"
 	.then(() => console.log("conneted to DB"))
 	.catch((err) => console.log(err));
-app.use(cors({credentials: true, origin: `https://bank-transactions-xjkk.onrender.com`}))
+app.use(cors({ origin: `https://bank-transactions-xjkk.onrender.com`,credentials: true}))
 
 
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+	res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
     next()
 })
