@@ -6,7 +6,7 @@ import { API } from '../server/config'
 export default function Navbar({ balance, setAuth}) {
 const userNameFromLclStrg = localStorage.getItem("user")
   const signOut = () =>{
-       axios.get(`${API}/logout`, { withCredentials: true}).then(()=>{console.log("logout successfully")}).then(()=>{
+       axios.get(`${API}/logout`, { withCredentials: true}).then(()=>{localStorage.clear()}).then(()=>{
         setAuth(false)
         localStorage.clear()
        });

@@ -93,7 +93,6 @@ export default function Landing({setCurrUser, fetchData, setIsLoading, isLoading
 					localStorage.setItem("userEmail", response.data.user[0].email);
 					localStorage.setItem("user", response.data.user[0].userName);
 					await fetchData(email);
-					setAuth(true)
 				})
 				.catch((error) => {
 					setIsLoading(false);

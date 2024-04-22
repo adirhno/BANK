@@ -2,48 +2,12 @@ const jwt = require("jsonwebtoken");
 
 function authorizationMiddleWare(req, res, next) {
 	const { token } = req.cookies;
-	const { refresh } = req.cookies;
 	const { user } = req.cookies;
-	console.log(token)
-	console.log(refresh)
-	console.log(user)
+
 	try {
-		if (token !== undefined) {
-			console.log("im here");
-			const payload = jwt.verify(token, "token", (e) => {});
-			if (payload) {
-				next();
-			} else {
-				const refreshToken = jwt.verify(refresh, "refresh");
-				if (refreshToken) {
-					const newToken = jwt.sign({ user: user }, "token", {
-						expiresIn: "100s",
-					});
-					res.cookie("token", newToken, {
-						httpOnly: true,
-						maxAge: 900000,
-					});
-					next();
-				} else {
-					res.clearCookie("token").send("Invalid JWT token!");
-				}
-			}
-		} else {
-			if (!user) {
-				res.send("not yet");
-			} else {
-				const refreshToken = jwt.verify(refresh, "refresh");
-				if (refreshToken) {
-					const newToken = jwt.sign({ user: user }, "token", {
-						expiresIn: "100s",
-					});
-					res.cookie("token", newToken, {
-						httpOnly: true,
-						maxAge: 900000,
-					});
-					next();
-				}
-			}
+		const payload = jwt.verify(token, "token");
+		if (payload) {
+			next()
 		}
 	} catch (error) {
 		res.clearCookie("token").send("Invalid JWT token!");

@@ -3,7 +3,6 @@ const API = "https://bank-g61v.onrender.com";
 
 
 const calculateCategoryAmount = function (category) {
-	console.log("caa", category);
 	let sum = 0;
 	for (let i = 0; i < category.transactions.length; i++) {
 		sum += category.transactions[i].amount;
