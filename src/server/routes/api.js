@@ -10,6 +10,7 @@ const jwt = require("jsonwebtoken");
 const { authorizationMiddleWare } = require("../middlewares/auth.middleware");
 const { refreshAuthMiddleWare } = require("../middlewares/refreshAuth.middleware.js");
 const serialize = require("cookie");
+require('dotenv').config();
 
 router.get("/home/:user", authorizationMiddleWare, async function (req, res) {
 	try {
@@ -137,11 +138,11 @@ router.post("/signup", async function (req, res) {
 						let u1 = new User(userDetails);
 						u1.save();
 
-						const token = jwt.sign({user:userDetails.email}, "token", {
+						const token = jwt.sign({user:userDetails.email},  process.env.TOKEN, {
             			expiresIn: '2h'
    					     })
 
-						const refreshToken = jwt.sign({user:userDetails.email}, "refresh")
+						const refreshToken = jwt.sign({user:userDetails.email},  process.env.REFRESH_TOKEN)
 						
 						res.cookie("token", token,{
 							httpOnly:true,
@@ -176,10 +177,10 @@ router.post("/signin", async function (req, res) {
 			res.sendStatus(400)
 		} else if (user[0].password == req.body.password && !req.body.withGoogle) {
 
-			const token = jwt.sign({user:req.body.email}, "token", {
+			const token = jwt.sign({user:req.body.email},  process.env.TOKEN, {
             expiresIn: '10s'
         })
-			const refreshToken = jwt.sign({user:req.body.email}, "refresh")
+			const refreshToken = jwt.sign({user:req.body.email},  process.env.REFRESH_TOKEN)
 			user['token']=token
 
 		res.cookie("token", token,{

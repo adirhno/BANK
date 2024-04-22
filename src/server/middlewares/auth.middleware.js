@@ -1,13 +1,11 @@
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
 function authorizationMiddleWare(req, res, next) {
 	const { token } = req.cookies;
-	const { user } = req.cookies;
 
 	try {
-		console.log(token)
-		const payload = jwt.verify(token, "token");
-		console.log(payload)
+		const payload = jwt.verify(token, process.env.TOKEN);
 		if (payload) {
 			next()
 		}
