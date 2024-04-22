@@ -10,9 +10,9 @@ function refreshAuthMiddleWare(req, res, next) {
 			const newToken = jwt.sign({ user }, "token", { expiresIn: "60s" });
 			res.cookie("token", newToken, {
 				httpOnly: true,
-				httpOnly:true,
 				sameSite: 'none',
 				maxAge: 900000,
+				secure: true
 			});
 			next()
 		}
