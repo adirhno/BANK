@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
 
-function refreshAuthMiddleWare(req, res, next) {
+function refreshTokenAuthMiddleware(req, res, next) {
 	const { refresh } = req.cookies;
 	const { user } = req.cookies;
 
@@ -22,4 +22,4 @@ function refreshAuthMiddleWare(req, res, next) {
 	}
 }
 
-module.exports = { refreshAuthMiddleWare };
+module.exports = { refreshTokenAuthMiddleware };

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-require('dotenv').config();
+require("dotenv").config();
 
 function authorizationMiddleWare(req, res, next) {
 	const { token } = req.cookies;
@@ -7,7 +7,7 @@ function authorizationMiddleWare(req, res, next) {
 	try {
 		const payload = jwt.verify(token, process.env.TOKEN);
 		if (payload) {
-			next()
+			next();
 		}
 	} catch (error) {
 		res.clearCookie("token").send("Invalid JWT token!");

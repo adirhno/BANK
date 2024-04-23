@@ -7,7 +7,7 @@ import LoadingBar from "./LoadingBar";
 import { signInWithGoogle } from "../server/firebase/firebase";
 import { signInReq } from "../server/apiManager";
 
-export default function Landing({setCurrUser, fetchData, setIsLoading, isLoading, setAuth}) {
+export default function Landing({ fetchData, setIsLoading, isLoading, setAuth }) {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
@@ -77,8 +77,8 @@ export default function Landing({setCurrUser, fetchData, setIsLoading, isLoading
 				})
 				.catch((error) => {
 					setIsLoading(false);
-					console.log(error);
-					alert(error);
+					console.log(error.response.data);
+					alert(error.response.data);
 				});
 		}
 	};
@@ -108,7 +108,7 @@ export default function Landing({setCurrUser, fetchData, setIsLoading, isLoading
 	};
 
 	return <>
-	<div className="navbar"><p className="landingNavbar">Welcome To Your Transactions Manager</p></div>
+	<div className="navbar"><p className="landingNavbar">Ttransactions Manager</p></div>
 		{loginStatus === "signIn"? (<div className="loginContainer">
 		{isLoading?<LoadingBar action={"signIn"} />:<></>}	
 		 

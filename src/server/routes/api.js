@@ -8,10 +8,7 @@ const passwordValidator = require("password-validator");
 const passwordValidatorSchema = new passwordValidator();
 const jwt = require("jsonwebtoken");
 const { authorizationMiddleWare } = require("../middlewares/auth.middleware");
-const {
-	refreshAuthMiddleWare,
-} = require("../middlewares/refreshAuth.middleware.js");
-const serialize = require("cookie");
+const { refreshTokenAuthMiddleware } = require("../middlewares/refreshTokenAuth.middleware.js");
 require("dotenv").config();
 
 router.get("/home/:user", authorizationMiddleWare, async function (req, res) {
@@ -27,11 +24,7 @@ router.get("/home/:user", authorizationMiddleWare, async function (req, res) {
 	}
 });
 
-router.get("/auth", authorizationMiddleWare, function (req, res) {
-	res.json({ auth: true });
-});
-
-router.get("/refreshAuth", refreshAuthMiddleWare, function (req, res) {
+router.get("/auth", refreshTokenAuthMiddleware, function (req, res) {
 	res.send({ auth: true });
 });
 
@@ -124,8 +117,13 @@ router.get("/balance/:user", async function (req, res) {
 router.post("/signup", async function (req, res) {
 	passwordValidatorSchema.has().not().spaces().is().min(8);
 	let userDetails = req.body;
-	const token = jwt.sign({ user: userDetails.email }, process.env.TOKEN, {expiresIn: "2h",});
-	const refreshToken = jwt.sign({ user: userDetails.email },process.env.REFRESH_TOKEN);
+	const token = jwt.sign({ user: userDetails.email }, process.env.TOKEN, {
+		expiresIn: "2h",
+	});
+	const refreshToken = jwt.sign(
+		{ user: userDetails.email },
+		process.env.REFRESH_TOKEN
+	);
 
 	try {
 		const user = await User.find({ email: userDetails.email });
@@ -181,10 +179,6 @@ router.post("/signup", async function (req, res) {
 	}
 });
 
-router.get("/logout", function (req, res) {
-	res.clearCookie("token").clearCookie("refresh").send("token cleared!");
-});
-
 router.post("/signin", async function (req, res) {
 	try {
 		const user = await User.find({ email: req.body.email });
@@ -233,4 +227,9 @@ router.post("/signin", async function (req, res) {
 		res.send(error);
 	}
 });
+
+router.get("/logout", function (req, res) {
+	res.clearCookie("token").clearCookie("refresh").send("token cleared!");
+});
+
 module.exports = router;

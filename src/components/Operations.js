@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import { addTransaction } from "../server/apiManager";
 import { Snackbar } from "@material/react-snackbar";
-import { Progress } from "rsuite";
 import "@material/react-snackbar/dist/snackbar.css";
 
 export default function Operations({ fetchData, balance }) {

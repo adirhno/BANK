@@ -5,17 +5,12 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Operations from "./components/Operations";
 import Breakdown from "./components/Breakdown";
-import {
-	getBalance,
-	breakdown,
-	getAllTransactions,
-} from "../src/server/apiManager";
+import { getBalance, breakdown, getAllTransactions, refreshTokenAuth } from "../src/server/apiManager";
 import Landing from "./components/Landing";
 import Footer from "./components/Footer";
-import axios from "axios";
-import { API } from "./server/config";
 import "@material/react-snackbar/dist/snackbar.css";
 import { Progress } from "rsuite";
+
 
 function App() {
 	const [data, setData] = useState([]);
@@ -25,29 +20,30 @@ function App() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [auth, setAuth] = useState(false);
 	const [percent, setPercent] = useState(0);
-	const [ refreshing, setRefresh] = useState(false)
+	const [refreshing, setRefresh] = useState(false);
 
 	useEffect(() => {
-		const user = localStorage.getItem("userEmail")
-		if(user){
-			setAuth(true)
+		const user = localStorage.getItem("userEmail");
+		if (user) {
+			setAuth(true);
 			fetchData(user);
 		}
 
-			const interval = setInterval(() => {
+		const interval = setInterval(() => {
 			if (percent >= 100) {
 				setPercent(0);
 			} else {
-				setPercent((p)=>p+1)
+				setPercent((p) => p + 1);
 			}
-		},130);
+		}, 130);
 
-		return () => {clearInterval(interval)}
-		
+		return () => {
+			clearInterval(interval);
+		};
 	}, []);
 
 	const color = percent >= 75 ? "#03D613" : "#02749C";
-	
+
 	const initBalance = async function (userEmail) {
 		await getBalance(userEmail).then((results) => {
 			setBalance(results.data.sum);
@@ -62,27 +58,26 @@ function App() {
 
 	const fetchData = async function (userEmail) {
 		await getAllTransactions(userEmail).then(async (data) => {
-			setRefresh(true)
+			setRefresh(true);
 			if (data.data == "Invalid JWT token!") {
-				axios.get(`${API}/refreshAuth`, { withCredentials: true })
-					.then(async (res) => {
-						if (!res.data.auth) {
-							setAuth(false);
-							setRefresh(false)
-						} else {
-							setAuth(true);
-							setData(res.data);
-							 fetchCategoriesSum(userEmail);
-							 initBalance(userEmail);
-							setRefresh(false)
-						}
-					});
+				refreshTokenAuth().then(async (res) => {
+					if (!res.data.auth) {
+						setAuth(false);
+						setRefresh(false);
+					} else {
+						setAuth(true);
+						setData(res.data);
+						fetchCategoriesSum(userEmail);
+						initBalance(userEmail);
+						setRefresh(false);
+					}
+				});
 			} else {
 				setAuth(true);
-				 initBalance(userEmail);
-				 setData(data.data);
+				initBalance(userEmail);
+				setData(data.data);
 				await fetchCategoriesSum(userEmail);
-				setRefresh(false)
+				setRefresh(false);
 			}
 		});
 		setIsLoading(false);

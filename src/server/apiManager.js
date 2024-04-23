@@ -2,10 +2,12 @@ import axios from "axios";
 import {API} from '../server/config'
 
 const getBalance=function(user){
-  return axios.get(`${API}/balance/${user}`,{
-    withCredentials: true
-})
-}
+  return axios.get(`${API}/balance/${user}`,{ withCredentials: true })
+  }
+
+const refreshTokenAuth = function(){
+  return axios.get(`${API}/auth`,{ withCredentials: true })
+  }
 
 const breakdown=function(user){
     return axios.get(`${API}/breakdown/${user}`,{
@@ -39,4 +41,4 @@ const createUser = (user) =>{
    return axios.post(`${API}/signup`,user)
 }
 
-export {getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction, createUser, signInReq}
+export {getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction, createUser, signInReq, refreshTokenAuth}
