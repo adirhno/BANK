@@ -44,15 +44,14 @@ export default function Landing({setCurrUser, fetchData, setIsLoading, isLoading
 			axios.post(`${API}/signup`, {
 					withGoogle: true,
 					userName: _tokenResponse.displayName,
-					password: "",
+					password: "12345678",
 					email: _tokenResponse.email,
-				})
+				}, {withCredentials:true})
 				.then(async () => {
 					await fetchData(_tokenResponse.email);
-					setCurrUser({
-						userName: _tokenResponse.displayName,
-						email: _tokenResponse.email,
-					});
+					localStorage.setItem("user", _tokenResponse.displayName);
+					localStorage.setItem("userEmail", _tokenResponse.email);
+				
 				})
 				.catch((error) => {
 					setIsLoading(false);
@@ -79,7 +78,7 @@ export default function Landing({setCurrUser, fetchData, setIsLoading, isLoading
 				.catch((error) => {
 					setIsLoading(false);
 					console.log(error);
-					alert(error.response.data);
+					alert(error);
 				});
 		}
 	};
