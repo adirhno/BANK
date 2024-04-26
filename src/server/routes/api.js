@@ -229,7 +229,7 @@ router.post("/signin", async function (req, res) {
 });
 
 router.get("/logout", function (req, res) {
-	res.clearCookie("token").clearCookie("refresh").send("token cleared!");
+	res.clearCookie("token").clearCookie("refresh").redirect('https://bank-transactions-xjkk.onrender.com');
 });
 
 module.exports = router;
