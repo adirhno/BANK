@@ -132,12 +132,12 @@ router.post("/signup", async function (req, res) {
 				res.cookie("token", token, {
 					httpOnly: true,
 					sameSite: "none",
-					secure: false,
+					secure: true,
 					maxAge: 900000,
 				}).cookie("refresh", refreshToken, {
 					httpOnly: true,
 					sameSite: "none",
-					secure: false,
+					secure: true,
 					maxAge: 900000,
 				});
 
@@ -155,12 +155,12 @@ router.post("/signup", async function (req, res) {
 
 					res.cookie("token", token, {
 						httpOnly: true,
-						sameSite: "none",
+						
 						secure: true,
 						maxAge: 900000,
 					}).cookie("refresh", refreshToken, {
 						httpOnly: true,
-						sameSite: "none",
+						
 						secure: true,
 						maxAge: 900000,
 					});
@@ -203,14 +203,14 @@ router.post("/signin", async function (req, res) {
 
 			res.cookie("token", token, {
 				httpOnly: true,
-				sameSite: "none",
-				secure: false,
+				
+				secure: true,
 				maxAge: 900000,
 			})
 				.cookie("refresh", refreshToken, {
 					httpOnly: true,
-					sameSite: "none",
-					secure: false,
+					
+					secure: true,
 					maxAge: 900000,
 				})
 				.cookie("user", req.body.email, {
