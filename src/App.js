@@ -21,6 +21,20 @@ function App() {
 	const [auth, setAuth] = useState(false);
 	const [percent, setPercent] = useState(0);
 	const [refreshing, setRefresh] = useState(false);
+	const [width, setWidth] = useState(window.innerWidth);
+
+		function handleWindowSizeChange() {
+			setWidth(window.innerWidth);
+		}
+		useEffect(() => {
+			window.addEventListener('resize', handleWindowSizeChange);
+			return () => {
+				window.removeEventListener('resize', handleWindowSizeChange);
+			}
+		}, []);
+
+		const isMobile = width <= 768;
+
 
 	useEffect(() => {
 		const user = localStorage.getItem("userEmail");
@@ -83,12 +97,13 @@ function App() {
 		setIsLoading(false);
 	};
 
+
 	return <div className="App">
-	{auth ? <Navbar setAuth={setAuth} userName={currUser.userName} balance={balance}/> :<></> }
+	{auth ? <Navbar isMobile={isMobile} setAuth={setAuth} userName={currUser.userName} balance={balance}/> :<></> }
 		{auth?  (<Routes>
-					<Route path='/transactions' element={<Transactions currUser={currUser} setData={setData} fetchData={fetchData} transactions={data} />} />
+					<Route path='/transactions' element={<Transactions isMobile={isMobile} currUser={currUser} setData={setData} fetchData={fetchData} transactions={data} />} />
 					<Route path='/operations' element={ <Operations currUser={currUser} balance={balance} fetchData={fetchData} setBalance={setBalance} />} />
-					<Route path='/breakdown' element={<Breakdown categoriesSum={categoriesSum} />} />
+					<Route path='/breakdown' element={<Breakdown isMobile={isMobile} categoriesSum={categoriesSum} />} />
 				</Routes>) : <Landing setAuth={setAuth} isLoading={isLoading} setIsLoading={setIsLoading} fetchCategoriesSum={fetchCategoriesSum} initBalance={initBalance} fetchData={fetchData} setCurrUser={setCurrUser}/>}
 		<Footer />
 		{refreshing?<Progress.Circle className="circleProgress"
