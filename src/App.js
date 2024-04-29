@@ -72,7 +72,7 @@ function App() {
 
 	const fetchData = async function (userEmail) {
 		await getAllTransactions(userEmail).then(async (data) => {
-			alert("inside fetch get all", data.data)
+			alert( data.data)
 			setRefresh(true);
 			if (data.data == "Invalid JWT token!") {
 				refreshTokenAuth().then(async (res) => {
