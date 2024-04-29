@@ -83,12 +83,14 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth })
 			setIsLoading(true);
 			signInReq(password, email)
 				.then(async (response) => {
+					alert("sign in req")
 					console.log(response);
 					localStorage.setItem("userEmail", response.data.user[0].email);
 					localStorage.setItem("user", response.data.user[0].userName);
 					await fetchData(email);
 				})
 				.catch((error) => {
+					alert(error)
 					setIsLoading(false);
 					console.log(error);
 					if (error.response) {
