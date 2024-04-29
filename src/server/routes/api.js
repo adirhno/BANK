@@ -184,17 +184,8 @@ router.post("/signin", async function (req, res) {
 		const user = await User.find({ email: req.body.email });
 		if (user.length < 1) {
 			res.sendStatus(400);
-		} else if (
-			user[0].password == req.body.password &&
-			!req.body.withGoogle
-		) {
-			const token = jwt.sign(
-				{ user: req.body.email },
-				process.env.TOKEN,
-				{
-					expiresIn: "10s",
-				}
-			);
+		} else if ( user[0].password == req.body.password && !req.body.withGoogle ) {
+			const token = jwt.sign({ user: req.body.email },process.env.TOKEN,{expiresIn: "1h",});
 			const refreshToken = jwt.sign(
 				{ user: req.body.email },
 				process.env.REFRESH_TOKEN
