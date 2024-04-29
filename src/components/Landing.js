@@ -63,12 +63,9 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth })
 		if (isSignupValidate(email, password, userName)) {
 			setIsLoading(true);
 			axios.post(`${API}/signup`,{ userName, password, email },{ withCredentials: true })
-				.then(async (response) => {
+				.then(async () => {
 					localStorage.setItem("user", userName);
 					localStorage.setItem("userEmail", email);
-					localStorage.setItem("token", response.data.userDetails[0].token);
-					localStorage.setItem("refreshToken", response.data.userDetails[0].refreshToken);
-					
 					alert("after local storage")
 					await fetchData(email);
 					setAuth(true)
@@ -86,11 +83,10 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth })
 			setIsLoading(true);
 			signInReq(password, email)
 				.then(async (response) => {
+					alert("sign in req")
 					console.log(response);
 					localStorage.setItem("userEmail", response.data.user[0].email);
 					localStorage.setItem("user", response.data.user[0].userName);
-					localStorage.setItem("token", response.data.user[0].token);
-					localStorage.setItem("refreshToken", response.data.refreshToken);
 					await fetchData(email);
 				})
 				.catch((error) => {
