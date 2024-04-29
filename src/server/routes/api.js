@@ -131,11 +131,13 @@ router.post("/signup", async function (req, res) {
 			if (userDetails.withGoogle) {
 				res.cookie("token", token, {
 					httpOnly: true,
+					path:'/',
 					sameSite: "none",
 					secure: true,
 					maxAge: 900000,
 				}).cookie("refresh", refreshToken, {
 					httpOnly: true,
+					path:'/',
 					sameSite: "none",
 					secure: true,
 					maxAge: 900000,
@@ -156,11 +158,13 @@ router.post("/signup", async function (req, res) {
 					res.cookie("token", token, {
 						httpOnly: true,
 						sameSite: "none",
+						path:'/',
 						secure: true,
 						maxAge: 900000,
 					}).cookie("refresh", refreshToken, {
 						httpOnly: true,
 						sameSite: "none",
+						path:'/',
 						secure: true,
 						maxAge: 900000,
 					});
@@ -195,18 +199,21 @@ router.post("/signin", async function (req, res) {
 			res.cookie("token", token, {
 				httpOnly: true,
 				sameSite: "none",
+				path:'/',
 				secure: true,
 				maxAge: 900000,
 			})
 				.cookie("refresh", refreshToken, {
 					httpOnly: true,
 					sameSite: "none",
+					path:'/',
 					secure: true,
 					maxAge: 900000,
 				})
 				.cookie("user", req.body.email, {
 					httpOnly: true,
 					sameSite: "none",
+					path:'/',
 					secure: true,
 					maxAge: 900000,
 				});
