@@ -76,8 +76,9 @@ function App() {
 			setRefresh(true);
 			if (data.data == "Invalid JWT token!") {
 				refreshTokenAuth().then(async (res) => {
+					alert(res.data)
 					if (!res.data.auth) {
-						alert("no auth")
+						
 						setAuth(false);
 						setRefresh(false);
 					} else {
