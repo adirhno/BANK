@@ -72,13 +72,16 @@ function App() {
 
 	const fetchData = async function (userEmail) {
 		await getAllTransactions(userEmail).then(async (data) => {
+			alert("inside fetch get all")
 			setRefresh(true);
 			if (data.data == "Invalid JWT token!") {
 				refreshTokenAuth().then(async (res) => {
 					if (!res.data.auth) {
+						alert("no auth")
 						setAuth(false);
 						setRefresh(false);
 					} else {
+						alert(" auth ok")
 						setAuth(true);
 						setData(res.data);
 						fetchCategoriesSum(userEmail);
@@ -87,6 +90,7 @@ function App() {
 					}
 				});
 			} else {
+				alert("invalid jwt token")
 				setAuth(true);
 				initBalance(userEmail);
 				setData(data.data);
