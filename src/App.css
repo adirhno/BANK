@@ -48,6 +48,7 @@
 	margin-bottom: 10px;
 }
 
+
 .circleProgress {
 	position: relative;
 	top: -300px;
@@ -266,6 +267,22 @@ a {
 	width: 650px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	border-radius: 9px;
+}
+
+.loginFormMobile {
+	padding: 40px;
+	margin-top: 30px;
+	max-width: 68%;
+	min-width: 40%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 9px;
+}
+
+.loginBtnsMobile {
+	display: flex;
+	width: 200px;
+	justify-content: space-between;
+	padding: 10px;
 }
 
 .loginBtns {

@@ -38,12 +38,12 @@ const userNameFromLclStrg = localStorage.getItem("user")
     <span className='cards'>
     <Link className='card' to={'/transactions'} >
     <div>
-    TRANSACTIONS
+    TRANSACTIONS 
     </div>
     </Link>
     <Link className='card' to={'/operations'}>
     <div>
-   OPERATIONS
+   OPERATIONS 
     </div>
     </Link>
     <Link className='card' to={'breakdown'}>

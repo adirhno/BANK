@@ -7,7 +7,7 @@ import LoadingBar from "./LoadingBar";
 import { signInWithGoogle } from "../server/firebase/firebase";
 import { signInReq } from "../server/apiManager";
 
-export default function Landing({ fetchData, setIsLoading, isLoading, setAuth }) {
+export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, isMobile }) {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
@@ -105,12 +105,12 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth })
 		{loginStatus === "signIn"? (<div className="loginContainer">
 		{isLoading?<LoadingBar action={"signIn"} />:<></>}	
 		 
-			<div className='loginForm'>
+			<div className={isMobile? 'loginFormMobile':'loginForm'}>
 		<div className='inputs'>
    	 <input className="emailInput" placeholder='email' onChange={(e)=>setEmail(e.target.value)}></input>
     <input type="password" placeholder='password' onChange={(e)=>setPassword(e.target.value)} required ></input>
     </div>
-    <div className='loginBtns'>
+    <div className={isMobile?'loginBtnsMobile':'loginBtns'}>
        <button className="loginFormBtn" onClick={()=>{setLoginStatus("")}}>sign up</button>
     <button className="loginFormBtn" onClick={()=>signIn()}>sign in</button>
     <button className="loginFormBtn " onClick={()=>signInWithGoogleFunc()}><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="30" viewBox="0 0 24 24">
@@ -121,14 +121,14 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth })
   </div>
     </div>):(<div className="loginContainer">
 	{isLoading?<LoadingBar action={"signUp"} />:<></>}	
-     <div className='loginForm'>
+     <div className={isMobile? 'loginFormMobile':'loginForm'}>
 	 <button className="backBtn" onClick={()=>setLoginStatus("signIn")}>back</button>
     <div className='inputs'>
     <input placeholder='user name' onChange={(e)=>setUserName(e.target.value)}></input>
     <input type="email" placeholder='email' onChange={(e)=>setEmail(e.target.value)} ></input>
     <input type="password" placeholder='password' onChange={(e)=>setPassword(e.target.value)} ></input>
     </div>
-    <div className='loginBtns'>
+    <div className={isMobile?'loginBtnsMobile':'loginBtns'}>
       <button className="loginFormBtnSignUp" onClick={()=>{signUp()}}>sign up</button>
     </div>
   </div>
