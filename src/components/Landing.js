@@ -101,7 +101,7 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 	};
 
 	return <>
-	<div className="navbar"><p className="landingNavbar">Ttransactions Manager</p></div>
+	<div className="navbar"><p className="landingNavbar">Expense Manager</p></div>
 		{loginStatus === "signIn"? (<div className="loginContainer">
 		{isLoading?<LoadingBar action={"signIn"} />:<></>}	
 		 
