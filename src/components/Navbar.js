@@ -47,7 +47,7 @@ const userNameFromLclStrg = localStorage.getItem("user")
     </div>
     </Link>
     <Link className='card' to={'breakdown'}>
-    <div>
+    <div className='bra'>
     BREAKDOWN 
     </div>
     </Link>

@@ -48,7 +48,6 @@
 	margin-bottom: 10px;
 }
 
-
 .circleProgress {
 	position: relative;
 	top: -300px;
@@ -60,6 +59,10 @@
 }
 .card:focus {
 	color: brown;
+	display: block;
+	width: 0;
+	border-bottom: 1.5px solid;
+	transition: all 0.3s linear 0s;
 }
 
 .card :hover {
@@ -67,7 +70,6 @@
 	font-size: 21px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	border-radius: 3px;
-	text-decoration: none;
 }
 
 .transactions {
