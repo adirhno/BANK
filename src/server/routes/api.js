@@ -191,12 +191,12 @@ router.post("/signup", async function (req, res) {
 
 router.post("/signin", async function (req, res) {
 	try {
+		
 		const user = await User.find({ email: req.body.email });
+		const passwordVerified = bcrypt.compare(req.body.password, user[0].password);
 		if (user.length < 1) {
 			res.sendStatus(400);
-
-			const passwordVerified = bcrypt.compare(req.body.password , user[0].password );
-		if (passwordVerified && !req.body.withGoogle) {
+		} else if ( passwordVerified && !req.body.withGoogle ) {
 			const token = jwt.sign({ user: req.body.email },process.env.TOKEN,{expiresIn: "1h",});
 			const refreshToken = jwt.sign(
 				{ user: req.body.email },
@@ -226,39 +226,7 @@ router.post("/signin", async function (req, res) {
 					maxAge: 900000,
 				});
 			res.json({ refreshToken, user });
-		}
-
-		// } else if ( user[0].password == req.body.password && !req.body.withGoogle ) {
-		// 	const token = jwt.sign({ user: req.body.email },process.env.TOKEN,{expiresIn: "1h",});
-		// 	const refreshToken = jwt.sign(
-		// 		{ user: req.body.email },
-		// 		process.env.REFRESH_TOKEN
-		// 	);
-		// 	user["token"] = token;
-
-		// 	res.cookie("token", token, {
-		// 		httpOnly: true,
-		// 		sameSite: "none",
-		// 		path:'/',
-		// 		secure: true,
-		// 		maxAge: 900000,
-		// 	})
-		// 		.cookie("refresh", refreshToken, {
-		// 			httpOnly: true,
-		// 			sameSite: "none",
-		// 			path:'/',
-		// 			secure: true,
-		// 			maxAge: 900000,
-		// 		})
-		// 		.cookie("user", req.body.email, {
-		// 			httpOnly: true,
-		// 			sameSite: "none",
-		// 			path:'/',
-		// 			secure: true,
-		// 			maxAge: 900000,
-		// 		});
-		// 	res.json({ refreshToken, user });
-		// } else {
+		} else {
 			res.sendStatus(401);
 		}
 	} catch (error) {
