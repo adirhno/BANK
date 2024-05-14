@@ -6,6 +6,7 @@ const { calculateCategoryAmount } = require("../config");
 const validator = require("validator");
 const passwordValidator = require("password-validator");
 const passwordValidatorSchema = new passwordValidator();
+const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
 const { authorizationMiddleWare } = require("../middlewares/auth.middleware");
 const { refreshTokenAuthMiddleware } = require("../middlewares/refreshTokenAuth.middleware.js");
@@ -124,6 +125,11 @@ router.post("/signup", async function (req, res) {
 		{ user: userDetails.email },
 		process.env.REFRESH_TOKEN
 	);
+
+		const saltRounds = 10;
+		const salt = bcrypt.genSaltSync(saltRounds);
+		const hashedPassword = bcrypt.hashSync(userDetails.password, salt);
+		userDetails["password"] = hashedPassword;
 
 	try {
 		const user = await User.find({ email: userDetails.email });
