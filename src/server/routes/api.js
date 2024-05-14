@@ -194,7 +194,9 @@ router.post("/signin", async function (req, res) {
 		const user = await User.find({ email: req.body.email });
 		if (user.length < 1) {
 			res.sendStatus(400);
-		} else if ( user[0].password == req.body.password && !req.body.withGoogle ) {
+
+			const passwordVerified = bcrypt.compare(req.body.password , user[0].password );
+		if (passwordVerified && !req.body.withGoogle) {
 			const token = jwt.sign({ user: req.body.email },process.env.TOKEN,{expiresIn: "1h",});
 			const refreshToken = jwt.sign(
 				{ user: req.body.email },
@@ -224,7 +226,39 @@ router.post("/signin", async function (req, res) {
 					maxAge: 900000,
 				});
 			res.json({ refreshToken, user });
-		} else {
+		}
+
+		// } else if ( user[0].password == req.body.password && !req.body.withGoogle ) {
+		// 	const token = jwt.sign({ user: req.body.email },process.env.TOKEN,{expiresIn: "1h",});
+		// 	const refreshToken = jwt.sign(
+		// 		{ user: req.body.email },
+		// 		process.env.REFRESH_TOKEN
+		// 	);
+		// 	user["token"] = token;
+
+		// 	res.cookie("token", token, {
+		// 		httpOnly: true,
+		// 		sameSite: "none",
+		// 		path:'/',
+		// 		secure: true,
+		// 		maxAge: 900000,
+		// 	})
+		// 		.cookie("refresh", refreshToken, {
+		// 			httpOnly: true,
+		// 			sameSite: "none",
+		// 			path:'/',
+		// 			secure: true,
+		// 			maxAge: 900000,
+		// 		})
+		// 		.cookie("user", req.body.email, {
+		// 			httpOnly: true,
+		// 			sameSite: "none",
+		// 			path:'/',
+		// 			secure: true,
+		// 			maxAge: 900000,
+		// 		});
+		// 	res.json({ refreshToken, user });
+		// } else {
 			res.sendStatus(401);
 		}
 	} catch (error) {
