@@ -69,6 +69,7 @@ function App() {
 			setCategoriesSum(results);
 		});
 	};
+	
 
 	const fetchData = async function (userEmail) {
 		await getAllTransactions(userEmail).then(async (data) => {
