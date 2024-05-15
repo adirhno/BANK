@@ -1,8 +1,8 @@
 import axios from "axios";
 import {API} from '../server/config'
 
-const getBalance=function(user){
-  return axios.get(`${API}/balance/${user}`,{ withCredentials: true })
+const getBalance=function(email){
+  return axios.get(`${API}/balance/${email}`,{ withCredentials: true })
   }
 
 const refreshTokenAuth = function(){
@@ -16,29 +16,30 @@ const breakdown=function(user){
 }
 
 const signInReq = function(password ,email){
-    return axios.post(`${API}/signin`, { password, email},  { withCredentials: true })
+    return axios.post(`${API}/auth/signin`, { password, email},  { withCredentials: true })
 }
 
 const getAllTransactions=function(user){
-    return axios.get(`${API}/home/${user}`,{
+    console.log(user)
+    return axios.get(`${API}/auth/home/${user}`,{
     withCredentials: true
 })
 }
 
 const addTransaction= function(transaction){
-    return axios.post(`${API}/transactions`,transaction, {
+    return axios.post(`${API}/transactions/transaction`,transaction, {
     withCredentials: true
 })
 }
 
 const deleteTransaction= function (transactionId){
-    return axios.get(`${API}/transactions/${transactionId}`,{
+    return axios.delete(`${API}/transactions/transaction/${transactionId}`,{
     withCredentials: true
 })
 }
 
 const createUser = (user) =>{
-   return axios.post(`${API}/signup`,user)
+   return axios.post(`${API}/auth/register`,user)
 }
 
 export {getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction, createUser, signInReq, refreshTokenAuth}

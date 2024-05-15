@@ -62,7 +62,7 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 	const signUp = () => {
 		if (isSignupValidate(email, password, userName)) {
 			setIsLoading(true);
-			axios.post(`${API}/signup`,{ userName, password, email },{ withCredentials: true })
+			axios.post(`${API}/auth/register`,{ userName, password, email },{ withCredentials: true })
 				.then(async () => {
 					localStorage.setItem("user", userName);
 					localStorage.setItem("userEmail", email);

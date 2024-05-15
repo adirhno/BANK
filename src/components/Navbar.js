@@ -7,7 +7,7 @@ export default function Navbar({ balance, setAuth, isMobile }) {
 const userNameFromLclStrg = localStorage.getItem("user")
 
   const signOut = () =>{
-       axios.get(`${API}/logout`, { withCredentials: true}).then(()=>{localStorage.clear()}).then(()=>{
+       axios.get(`${API}/auth/signout`, { withCredentials: true}).then(()=>{localStorage.clear()}).then(()=>{
         setAuth(false)
         localStorage.clear()
        });
