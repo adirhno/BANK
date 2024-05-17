@@ -3,7 +3,6 @@ const User = require("../server/models/User");
 class BalanceController {
 
 	async getBalance(req, res) {
-        console.log("asdsa",req.params.email)
 		try {
 			const balance = await User.findOne({ email: req.params.email }).select("transactions").populate("transactions");
 			let allCategories = balance.transactions;

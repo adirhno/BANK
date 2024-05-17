@@ -135,7 +135,6 @@ class AuthController {
 	}
 
 	async homePage(req, res){
-			console.log(req.params)
 		try {
 		const user = await User.findOne({ email: `${req.params.userEmail}` })
 			.select("transactions")
