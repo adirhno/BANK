@@ -5,7 +5,7 @@ import { Snackbar } from "@material/react-snackbar";
 import "@material/react-snackbar/dist/snackbar.css";
 import LoadingBar from "./LoadingBar";
 import { signInWithGoogle } from "../server/firebase/firebase";
-import { signInReq } from "../server/apiManager";
+import { signInReq } from "../apiManager";
 
 export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, isMobile }) {
 	const [userName, setUserName] = useState("");

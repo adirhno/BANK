@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "./Button";
-import { addTransaction } from "../server/apiManager";
+import { addTransaction } from "../apiManager";
 import { Snackbar } from "@material/react-snackbar";
 import "@material/react-snackbar/dist/snackbar.css";
 

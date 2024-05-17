@@ -1,5 +1,5 @@
 import Button from "./Button";
-import {deleteTransaction} from '../server/apiManager'
+import {deleteTransaction} from '../apiManager'
 
 export default function Transaction({ transaction, fetchData, isMobile }) {
 const currUser = localStorage.getItem("userEmail")
