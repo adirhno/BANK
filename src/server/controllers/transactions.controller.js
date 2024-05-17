@@ -1,5 +1,5 @@
-const Transaction = require("../server/models/Transaction");
-const User = require("../server/models/User");
+const Transaction = require("../models/Transaction");
+const User = require("../models/User");
 
 class TransactionsController {
 

@@ -1,5 +1,5 @@
-const { calculateCategoryAmount } = require("../server/config");
-const User = require("../server/models/User");
+const { calculateCategoryAmount } = require("../config");
+const User = require("../models/User");
 
 class BreakdownController {
 

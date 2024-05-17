@@ -1,5 +1,5 @@
 
-const transactionsController = require("../../controllers/transactions.controller.js");
+const transactionsController = require("../controllers/transactions.controller.js");
 const router = require("express").Router()
 
 router.post("/transaction", transactionsController.addTransaction);

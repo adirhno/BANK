@@ -40,7 +40,7 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 	const signInWithGoogleFunc = function () {
 		signInWithGoogle().then(({ _tokenResponse }) => {
 			setIsLoading(true);
-			axios.post(`${API}/signup`, {
+			axios.post(`${API}/auth/register`, {
 					withGoogle: true,
 					userName: _tokenResponse.displayName,
 					password: "12345678",
@@ -79,8 +79,8 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 	const signIn = () => {
 		if (isSigninValidate(email, password)) {
 			setIsLoading(true);
-			signInReq(password, email)
-				.then(async (response) => {
+			signInReq(password, email).then(async (response) => {
+				if(!response.data.user) throw "no user!"
 					console.log(response);
 					localStorage.setItem("userEmail", response.data.user[0].email);
 					localStorage.setItem("user", response.data.user[0].userName);

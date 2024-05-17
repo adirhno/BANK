@@ -1,7 +1,6 @@
-const User = require("../server/models/User");
+const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
 const validator = require("validator");
 const passwordValidator = require("password-validator");
 const passwordValidatorSchema = new passwordValidator();
@@ -86,13 +85,17 @@ class AuthController {
 	async signIn(req, res) {
 		try {
 			const user = await User.find({ email: req.body.email });
-			const passwordVerified = bcrypt.compare(
+			if (user.length == 0) {
+				throw "user not found!";
+			}
+			const passwordVerified = bcrypt.compareSync(
 				req.body.password,
 				user[0].password
 			);
-			if (user.length < 1) {
-				res.sendStatus(400);
-			} else if (passwordVerified && !req.body.withGoogle) {
+			if (!passwordVerified) {
+				res.sendStatus(401);
+			}
+			if (passwordVerified && !req.body.withGoogle) {
 				const token = jwt.sign(
 					{ user: req.body.email },
 					process.env.TOKEN,
@@ -126,25 +129,25 @@ class AuthController {
 						maxAge: 900000,
 					});
 				res.json({ refreshToken, user });
-			} else {
-				res.sendStatus(401);
 			}
 		} catch (error) {
-			res.send(error);
+			res.sendStatus(400);
 		}
 	}
 
-	async homePage(req, res){
+	async homePage(req, res) {
 		try {
-		const user = await User.findOne({ email: `${req.params.userEmail}` })
-			.select("transactions")
-			.populate("transactions");
+			const user = await User.findOne({
+				email: `${req.params.userEmail}`,
+			})
+				.select("transactions")
+				.populate("transactions");
 
-		res.json(user.transactions);
-	} catch (error) {
-		res.send({ msg: "error while trying to get the transactions" });
-		console.log(error);
-	}
+			res.json(user.transactions);
+		} catch (error) {
+			res.send({ msg: "error while trying to get the transactions" });
+			console.log(error);
+		}
 	}
 
 	async signOut(req, res) {
@@ -153,4 +156,4 @@ class AuthController {
 }
 
 const authController = new AuthController();
-module.exports = authController
+module.exports = authController;

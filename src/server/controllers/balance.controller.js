@@ -1,4 +1,4 @@
-const User = require("../server/models/User");
+const User = require("../models/User");
 
 class BalanceController {
 
