@@ -3,7 +3,6 @@ const app=express()
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
-const api=require('./routes/api')
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const { API } = require('./config');
