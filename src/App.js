@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Operations from "./components/Operations";
 import Breakdown from "./components/Breakdown";
-import { getBalance, breakdown, getAllTransactions, refreshTokenAuth } from "../src/server/apiManager";
+import { getBalance, breakdown, getAllTransactions, refreshTokenAuth } from "../src/apiManager";
 import Landing from "./components/Landing";
 import Footer from "./components/Footer";
 import "@material/react-snackbar/dist/snackbar.css";
