@@ -6,6 +6,7 @@ import "@material/react-snackbar/dist/snackbar.css";
 import LoadingBar from "./LoadingBar";
 import { signInWithGoogle } from "../server/firebase/firebase";
 import { signInReq } from "../apiManager";
+import ErrorHandler from "./ErrorHandler";
 
 export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, isMobile }) {
 	const [userName, setUserName] = useState("");
@@ -13,6 +14,7 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 	const [email, setEmail] = useState("");
 	const [loginStatus, setLoginStatus] = useState("signIn");
 	const [snackBar, setSnackBar] = useState("");
+	const [errorMsg, setErrorMsg] = useState("")
 
 	useEffect(() => {
 		setSnackBar("");
@@ -54,6 +56,7 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 				})
 				.catch((error) => {
 					setIsLoading(false);
+					
 					alert(error);
 				});
 		});
@@ -70,9 +73,9 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 					setAuth(true)
 				})
 				.catch((error) => {
-					setIsLoading(false);
-					alert(error.response.data)
-					console.log(error.response.data);
+						setErrorMsg(error.response.data)
+						setIsLoading(false);
+			
 				});
 		}
 	};
@@ -92,9 +95,9 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 					console.log(error);
 					if (error.response) {
 						if (error.response.data === "Bad Request") {
-							alert("user not found");
+							setErrorMsg("user not found!")
 						} else if (error.response.data === "Unauthorized") {
-							alert("invalid password");
+							setErrorMsg("invalid password!")
 						}
 					}
 				});
@@ -119,6 +122,7 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 	
 </svg></button>
     </div>
+	<ErrorHandler msg={errorMsg} />
   </div>
     </div>):(<div className="loginContainer">
 	{isLoading?<LoadingBar action={"signUp"} />:<></>}	
@@ -132,6 +136,7 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
     <div className={isMobile?'loginBtnsMobile':'loginBtns'}>
       <button className="loginFormBtnSignUp" onClick={()=>{signUp()}}>sign up</button>
     </div>
+	<ErrorHandler msg={errorMsg} />
   </div>
     </div>)}
 		{snackBar === 'validationErr' ?<Snackbar message="Fill all the fields please!" actionText="dismiss"/>:<></>}

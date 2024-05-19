@@ -8,6 +8,7 @@ const passwordValidatorSchema = new passwordValidator();
 class AuthController {
 	async register(req, res) {
 		passwordValidatorSchema.has().not().spaces().is().min(8);
+
 		let userDetails = req.body;
 		const token = jwt.sign({ user: userDetails.email }, process.env.TOKEN, {
 			expiresIn: "2h",
@@ -17,12 +18,13 @@ class AuthController {
 			process.env.REFRESH_TOKEN
 		);
 
-		const saltRounds = 10;
-		const salt = bcrypt.genSaltSync(saltRounds);
-		const hashedPassword = bcrypt.hashSync(userDetails.password, salt);
-		userDetails["password"] = hashedPassword;
-
 		try {
+			if (!validator.isEmail(userDetails.email)) throw "invalid email!"
+			if (!passwordValidatorSchema.validate(userDetails.password))throw "invalid password!";
+			const saltRounds = 10;
+			const salt = bcrypt.genSaltSync(saltRounds);
+			const hashedPassword = bcrypt.hashSync(userDetails.password, salt);
+			userDetails["password"] = hashedPassword;
 			const user = await User.find({ email: userDetails.email });
 			if (user.length > 0) {
 				if (userDetails.withGoogle) {
@@ -45,39 +47,29 @@ class AuthController {
 					throw "email already exist!";
 				}
 			} else {
-				if (validator.isEmail(userDetails.email)) {
-					if (
-						passwordValidatorSchema.validate(userDetails.password)
-					) {
-						userDetails["transactions"] = [];
-						userDetails["balance"] = 0;
-						let u1 = new User(userDetails);
-						u1.save();
+					userDetails["transactions"] = [];
+					userDetails["balance"] = 0;
+					let u1 = new User(userDetails);
+					u1.save();
 
-						res.cookie("token", token, {
-							httpOnly: true,
-							sameSite: "none",
-							path: "/",
-							secure: true,
-							maxAge: 900000,
-						}).cookie("refresh", refreshToken, {
-							httpOnly: true,
-							sameSite: "none",
-							path: "/",
-							secure: true,
-							maxAge: 900000,
-						});
+					res.cookie("token", token, {
+						httpOnly: true,
+						sameSite: "none",
+						path: "/",
+						secure: true,
+						maxAge: 900000,
+					}).cookie("refresh", refreshToken, {
+						httpOnly: true,
+						sameSite: "none",
+						path: "/",
+						secure: true,
+						maxAge: 900000,
+					});
 
-						res.json({ userDetails });
-					} else {
-						throw "invalid password!";
-					}
-				} else {
-					throw "invalid email!";
-				}
+					res.json({ userDetails });
+			
 			}
 		} catch (error) {
-			console.log(error);
 			res.status(400).send(error);
 		}
 	}
