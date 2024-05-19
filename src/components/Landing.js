@@ -71,6 +71,7 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 				})
 				.catch((error) => {
 					setIsLoading(false);
+					alert(error.response.data)
 					console.log(error.response.data);
 				});
 		}
