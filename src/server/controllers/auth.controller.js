@@ -20,7 +20,7 @@ class AuthController {
 
 		try {
 			if (!validator.isEmail(userDetails.email)) throw "invalid email!"
-			if (!passwordValidatorSchema.validate(userDetails.password))throw "invalid password!";
+			if (!passwordValidatorSchema.validate(userDetails.password))throw "the password should be minimum of 8 characters!";
 			const saltRounds = 10;
 			const salt = bcrypt.genSaltSync(saltRounds);
 			const hashedPassword = bcrypt.hashSync(userDetails.password, salt);

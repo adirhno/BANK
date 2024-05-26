@@ -97,7 +97,7 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 						if (error.response.data === "Bad Request") {
 							setErrorMsg("user not found!")
 						} else if (error.response.data === "Unauthorized") {
-							setErrorMsg("invalid password!")
+							setErrorMsg("invalid password! ")
 						}
 					}
 				});
@@ -105,7 +105,7 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 	};
 
 	return <>
-	<div className="navbar"><p className="landingNavbar">Expense Manager</p></div>
+	<div className="navbar"><p className="landingNavbar">My Bank</p></div>
 		{loginStatus === "signIn"? (<div className="loginContainer">
 		{isLoading?<LoadingBar action={"signIn"} />:<></>}	
 		 
