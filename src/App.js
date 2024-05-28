@@ -107,11 +107,7 @@ function App() {
 					<Route path='/breakdown' element={<Breakdown isMobile={isMobile} categoriesSum={categoriesSum} />} />
 				</Routes>) : <Landing isMobile={isMobile} setAuth={setAuth} isLoading={isLoading} setIsLoading={setIsLoading} fetchCategoriesSum={fetchCategoriesSum} initBalance={initBalance} fetchData={fetchData} setCurrUser={setCurrUser}/>}
 		<Footer />
-		{refreshing?<Progress.Circle className="circleProgress"
-						showInfo={false}
-						percent={percent}
-						strokeColor={color}
-					/> :<></>}
+		{refreshing?<Progress.Circle className="circleProgress" showInfo={false} percent={percent} strokeColor={color}/> :<></>}
 	</div>;
 }
 
