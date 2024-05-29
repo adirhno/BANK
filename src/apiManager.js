@@ -42,4 +42,8 @@ const createUser = (user) =>{
    return axios.post(`${API}/auth/register`,user)
 }
 
-export {getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction, createUser, signInReq, refreshTokenAuth}
+const updateUserDetails = (userDetails) =>{
+   return axios.patch(`${API}/user/`, userDetails)
+}
+
+export { getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction, createUser, signInReq, refreshTokenAuth, updateUserDetails }

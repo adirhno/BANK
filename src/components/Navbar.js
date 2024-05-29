@@ -52,7 +52,7 @@ const userNameFromLclStrg = localStorage.getItem("user")
     </div>
     </Link>
     </span>
-   {userNameFromLclStrg? <span>Welcome {userNameFromLclStrg}<p className='signOutBtn'><span onClick={()=>signOut()}>Sign Out</span></p></span>:<></>}
+   {userNameFromLclStrg? <span ><Link className='userDetails' to={'userDetails'}>Welcome {userNameFromLclStrg}</Link><p className='signOutBtn'><span onClick={()=>signOut()}>Sign Out</span></p></span>:<></>}
    {userNameFromLclStrg? ( balance < 0  ? <span className='balance red'>:BALANCE:{balance} </span>:<span className='balance green'>BALANCE: {balance} </span>):<></>}
   </div>}
   </>)

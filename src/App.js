@@ -10,6 +10,7 @@ import Landing from "./components/Landing";
 import Footer from "./components/Footer";
 import "@material/react-snackbar/dist/snackbar.css";
 import { Progress } from "rsuite";
+import UserDetails from "./components/UserDetails";
 
 
 function App() {
@@ -105,6 +106,7 @@ function App() {
 					<Route path='/transactions' element={<Transactions isMobile={isMobile} currUser={currUser} setData={setData} fetchData={fetchData} transactions={data} />} />
 					<Route path='/operations' element={ <Operations currUser={currUser} balance={balance} fetchData={fetchData} setBalance={setBalance} />} />
 					<Route path='/breakdown' element={<Breakdown isMobile={isMobile} categoriesSum={categoriesSum} />} />
+					<Route path='/userDetails' element={<UserDetails />} />
 				</Routes>) : <Landing isMobile={isMobile} setAuth={setAuth} isLoading={isLoading} setIsLoading={setIsLoading} fetchCategoriesSum={fetchCategoriesSum} initBalance={initBalance} fetchData={fetchData} setCurrUser={setCurrUser}/>}
 		<Footer />
 		{refreshing?<Progress.Circle className="circleProgress" showInfo={false} percent={percent} strokeColor={color}/> :<></>}

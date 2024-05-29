@@ -216,6 +216,24 @@ input {
 	font-weight: bold;
 }
 
+.update {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	background-color: rgb(99, 186, 99);
+	color: rgb(255, 255, 255);
+	padding: 8px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.cancel {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	background-color: rgb(184, 48, 55);
+	color: rgb(255, 255, 255);
+	padding: 8px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
 .Withdraw {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	background-color: rgb(211, 83, 83);
