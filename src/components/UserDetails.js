@@ -9,6 +9,10 @@ export default function UserDetails() {
 	const [currPassword, setCurrPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
     const email = localStorage.getItem("userEmail");
+    const user = localStorage.getItem("user");
+
+	useEffect(()=>{setUserName(user)},[])
+
 
 	const resetValues = function(){
 		setCurrPassword("")
