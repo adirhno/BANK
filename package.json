@@ -42,13 +42,12 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-		"start": "react-scripts --max_old_space_size=8192 start",
+		"start": "react-scripts start",
 		"dev": "nodemon server.js",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"serve": "--max_old_space_size=8192'",
-		"sa":""
+		"serve": "--max_old_space_size=8192'"
 	},
 	"engines": {
 		"node": "21.5.0"
