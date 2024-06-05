@@ -47,7 +47,8 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"serve": "--max_old_space_size=8192'"
+		"serve": "--max_old_space_size=8192'",
+		"sa":""
 	},
 	"engines": {
 		"node": "21.5.0"
