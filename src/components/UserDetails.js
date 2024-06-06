@@ -34,8 +34,9 @@ export default function UserDetails() {
 
     const updateDetails = function(){
 		setTimeout(setSnackbarStatus(""), 4000);
-        updateUserDetails({userName, currPassword, newPassword, userEmail:email})
-        .then((e)=> {if(e.status == 200){setSnackbarStatus("details updated"); resetValues(); localStorage.setItem("user", userName)} })
+		if(userName == "") setUserName(user)
+        updateUserDetails({userName: userName == ""? user: userName, currPassword, newPassword, userEmail:email})
+        .then((e)=> {if(e.status == 200){setSnackbarStatus("details updated"); resetValues(); console.log(e.data.userName);localStorage.setItem("user", e.data.userName)} })
 		.catch((e)=> {if(e.response.status == 401){ setSnackbarStatus(e.response.data)}})
     }
 

@@ -28,7 +28,7 @@ class UserController {
 				{ email: userEmail },
 				{ $set: { password: hashedPassword, userName: userName }},{new: true}
 			).exec();
-			res.send("details updated!");
+			res.send({msg:"details updated!", userName:userName});
 		} catch (error) {
 			if(error == "invalid password" || error == "validationErr") {
             res.status(401).send(error);
