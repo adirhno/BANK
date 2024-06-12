@@ -273,18 +273,21 @@ a {
 }
 
 .loginContainer {
+	
 	display: grid;
 	justify-content: center;
 }
 
 .loginForm {
+	background-image: url("/src/images/towfiqu-barbhuiya-joqWSI9u_XM-unsplash\ \(1\).jpg");
 	padding: 40px;
 	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 650px;
+	width: 630px;
+	height: 340px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	border-radius: 9px;
 }
