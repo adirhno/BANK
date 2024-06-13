@@ -17,6 +17,7 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 	const [errorMsg, setErrorMsg] = useState("")
 
 	useEffect(() => {
+		setErrorMsg("")
 		setSnackBar("");
 	}, [loginStatus]);
 
