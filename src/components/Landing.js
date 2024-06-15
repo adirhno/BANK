@@ -90,15 +90,16 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 					console.log(response);
 					localStorage.setItem("userEmail", response.data.user[0].email);
 					localStorage.setItem("user", response.data.user[0].userName);
-					const token = "1234"
-					sendSmsReq(token).then(async()=>{
-						if(smsToken == token){
-							await fetchData(email);
-						}
-						else{
-							throw "token invalid!"
-						}
-					})
+					await fetchData(email);
+					// const token = "1234"
+					// sendSmsReq(token).then(async()=>{
+					// 	if(smsToken == token){
+							
+					// 	}
+					// 	else{
+					// 		throw "token invalid!"
+					// 	}
+					// })
 					
 				})
 				.catch((error) => {
