@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const passwordValidator = require("password-validator");
+const twilioMessagesManager  = require("../services/twiliow.service.js");
 const passwordValidatorSchema = new passwordValidator();
 
 class AuthController {
@@ -120,6 +121,7 @@ class AuthController {
 						secure: true,
 						maxAge: 900000,
 					});
+
 				res.json({ refreshToken, user });
 			}
 		} catch (error) {
@@ -139,6 +141,17 @@ class AuthController {
 		} catch (error) {
 			res.send({ msg: "error while trying to get the transactions" });
 			console.log(error);
+		}
+	}
+
+	async verification(req, res) {
+		console.log(req.body)
+		console.log(twilioMessagesManager)
+		const { token } = req.body
+		try{
+			twilioMessagesManager.sendSMS("972547443231", token)
+		} catch (error) {
+			console.log(error)
 		}
 	}
 

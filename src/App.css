@@ -380,8 +380,9 @@ a {
 }
 
 .errorHandler {
-	color: red;
-	font-size: 17px;
+	color: rgb(255, 60, 0);
+	font-size: 19px;
 	margin-right: 20px;
-	margin-top: 10px;
+	font-weight: bold;
+	margin-bottom: 12px;
 }

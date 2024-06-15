@@ -19,6 +19,10 @@ const signInReq = function(password ,email){
     return axios.post(`${API}/auth/signin`, { password, email},  { withCredentials: true })
 }
 
+const sendSmsReq = function(token){
+    return axios.post(`${API}/auth/verification`, { token }, { withCredentials: true })
+}
+
 const getAllTransactions=function(user){
     console.log(user)
     return axios.get(`${API}/auth/home/${user}`,{
@@ -46,4 +50,4 @@ const updateUserDetails = (userDetails) =>{
    return axios.patch(`${API}/user/`, userDetails)
 }
 
-export { getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction, createUser, signInReq, refreshTokenAuth, updateUserDetails }
+export { getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction, createUser, signInReq, refreshTokenAuth, updateUserDetails, sendSmsReq }
