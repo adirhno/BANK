@@ -144,16 +144,16 @@ class AuthController {
 		}
 	}
 
-	async verification(req, res) {
-		console.log(req.body)
-		console.log(twilioMessagesManager)
-		const { token } = req.body
-		try{
-			twilioMessagesManager.sendSMS("972547443231", token)
-		} catch (error) {
-			console.log(error)
-		}
-	}
+	// async verification(req, res) {
+	// 	console.log(req.body)
+	// 	console.log(twilioMessagesManager)
+	// 	const { token } = req.body
+	// 	try{
+	// 		twilioMessagesManager.sendSMS("972547443231", token)
+	// 	} catch (error) {
+	// 		console.log(error)
+	// 	}
+	// }
 
 	async signOut(req, res) {
 		res.clearCookie("token").clearCookie("refresh").send("token cleared!");
