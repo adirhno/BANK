@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const passwordValidator = require("password-validator");
-const twilioMessagesManager  = require("../services/twiliow.service.js");
 const passwordValidatorSchema = new passwordValidator();
 
 class AuthController {
