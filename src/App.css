@@ -203,7 +203,15 @@ input {
 	color: red;
 }
 
+
+
+.num{
+	background-color: rgb(231, 216, 193);
+	border-radius: 3px;
+}
+
 .green {
+	font-weight: bold;
 	color: green;
 }
 
@@ -273,13 +281,11 @@ a {
 }
 
 .loginContainer {
-	
 	display: grid;
 	justify-content: center;
 }
 
 .loginForm {
-	
 	padding: 40px;
 	margin-top: 30px;
 	display: flex;

@@ -13,7 +13,7 @@ const currUser = localStorage.getItem("userEmail")
 		<div className={isMobile?"transaction mobile":"transaction"}>
 			<div className="leftContent">
 			<span className="transactionVendor">{transaction.vendor}</span>
-			{transaction.amount < 0? <span className="red">{transaction.amount}</span>:<span className="green">{transaction.amount}</span>}
+			{transaction.amount < 0? <span className="red">{transaction.amount}</span>:<span className="green num">{transaction.amount}</span>}
 			</div>
 			<div className="rightContent">
 			<span className="transactionCategory">{transaction.category}</span>
