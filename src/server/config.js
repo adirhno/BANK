@@ -1,6 +1,6 @@
 const { default: axios } = require("axios");
 const API = "https://bank-g61v.onrender.com";
-const a= 1;
+
 const calculateCategoryAmount = function (category) {
 	let sum = 0;
 	for (let i = 0; i < category.transactions.length; i++) {
