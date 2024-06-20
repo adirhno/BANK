@@ -1,8 +1,11 @@
 const { calculateCategoryAmount } = require("../config");
 const User = require("../models/User");
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
+const { buildPDF } = require("../services/pdf.service.js");
+
 
 class BreakdownController {
-
 	async getBreakdown(req, res) {
 		try {
 			let categoriesObj = {};
@@ -31,6 +34,40 @@ class BreakdownController {
 			res.send(categoriesArr);
 		} catch (err) {
 			console.log(err);
+		}
+	}
+
+	async createPdf(req, res) {
+
+		try {
+			const fileName = "test";
+			// const __filename = fileURLToPath(import.meta.url);
+			// const __dirname = dirname(__filename);
+			// const filePath = path.join(
+			// 	resolve(__dirname, ".."),
+			// 	"pdf",
+			// 	fileName
+			// );
+
+			const pdfDoc = new PDFDocument({
+				size: "A4",
+				margin: "24",
+				info: { Title: `test.pdf`, Author: "my bank" },
+			});
+			res.setHeader("Content-Type", "application/pdf");
+			res.setHeader(
+				"Content-Disposition",
+				`inline; filename=${fileName}`
+			);
+		
+			buildPDF(pdfDoc, req.body.client);
+			pdfDoc.pipe(fs.createWriteStream('output.pdf'));
+			pdfDoc.save()
+			// pdfDoc.pipe(fs.createWriteStream(filePath)); // save copy on the server: optional
+			
+			pdfDoc.end();
+		} catch (err) {
+			console.log(err)
 		}
 	}
 }

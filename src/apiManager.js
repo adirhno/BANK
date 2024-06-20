@@ -10,7 +10,7 @@ const refreshTokenAuth = function(){
   }
 
 const breakdown=function(user){
-    return axios.get(`${API}/breakdown/${user}`,{
+    return axios.get(`${API}/breakdown/d/${user}`,{
     withCredentials: true
 })
 }
@@ -21,6 +21,10 @@ const signInReq = function(password ,email){
 
 const sendSmsReq = function(token){
     return axios.post(`${API}/auth/verification`, { token }, { withCredentials: true })
+}
+
+const createPdf = function(client){
+    return axios.post(`${API}/breakdown/pdf`, { client }, {withCredentials: true})
 }
 
 const getAllTransactions=function(user){
@@ -50,4 +54,4 @@ const updateUserDetails = (userDetails) =>{
    return axios.patch(`${API}/user/`, userDetails)
 }
 
-export { getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction, createUser, signInReq, refreshTokenAuth, updateUserDetails, sendSmsReq }
+export { getBalance, breakdown, getAllTransactions, addTransaction, deleteTransaction, createUser, signInReq, refreshTokenAuth, updateUserDetails, sendSmsReq, createPdf }
