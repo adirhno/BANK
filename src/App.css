@@ -203,9 +203,16 @@ input {
 	color: red;
 }
 
+.emailInput{
+	margin: 10px;
+}
 
+.title{
+	font-size: 32px;
+	color: aliceblue;
+}
 
-.num{
+.num {
 	background-color: rgb(231, 216, 193);
 	border-radius: 3px;
 }

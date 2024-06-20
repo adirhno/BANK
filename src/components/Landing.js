@@ -113,6 +113,7 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
 		{isLoading?<LoadingBar action={"signIn"} />:<></>}	
 		 
 			<div className={isMobile? 'loginFormMobile':'loginForm'}>
+			<span className="title">Login</span>
 			<ErrorHandler msg={errorMsg} />
 		<div className='inputs'>
    	 <input className="emailInput" placeholder='email' onChange={(e)=>setEmail(e.target.value)}></input>
@@ -130,17 +131,17 @@ export default function Landing({ fetchData, setIsLoading, isLoading, setAuth, i
     </div>):(<div className="loginContainer">
 	{isLoading?<LoadingBar action={"signUp"} />:<></>}	
      <div className={isMobile? 'loginFormMobile':'loginForm'}>
+	 <span className="title">Get Start!</span>
     <div className='inputs'>
 	<ErrorHandler msg={errorMsg} />
     <input placeholder='user name' onChange={(e)=>setUserName(e.target.value)}></input>
-    <input type="email" placeholder='email' onChange={(e)=>setEmail(e.target.value)} ></input>
+    <input className="emailInput" type="email" placeholder='email' onChange={(e)=>setEmail(e.target.value)} ></input>
     <input type="password" placeholder='password' onChange={(e)=>setPassword(e.target.value)} ></input>
     </div>
     <div className={isMobile?'loginBtnsMobile':'loginBtns'}>
       <button className="loginFormBtnSignUp" onClick={()=>{signUp()}}>submit</button>
       <button className="loginFormBtn" onClick={()=>setLoginStatus("signIn")}><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={48} d="M244 400L100 256l144-144M120 256h292"></path></svg> Login</button>
     </div>
-	
   </div>
     </div>)}
 		{snackBar === 'validationErr' ?<Snackbar message="Fill all the fields please!" actionText="dismiss"/>:<></>}
