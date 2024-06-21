@@ -10,6 +10,6 @@ this app help you to manage your expenses and revenues.
 - Firebase authentication
 
 ## Links:
-Website URL : [Bank Transactions](https://bank-transactions-xjkk.onrender.com)
+Website URL : [My Bank](https://bank-transactions-xjkk.onrender.com)
 
 
