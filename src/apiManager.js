@@ -23,8 +23,8 @@ const sendSmsReq = function(token){
     return axios.post(`${API}/auth/verification`, { token }, { withCredentials: true })
 }
 
-const createPdf = function(client){
-    return axios.post(`${API}/breakdown/pdf`, { client }, {withCredentials: true})
+const createPdf = function(userDetails){
+    return axios.post(`${API}/breakdown/pdf`, { userDetails }, {withCredentials: true})
 }
 
 const getAllTransactions=function(user){

@@ -3,10 +3,12 @@ import { createPdf } from "../apiManager";
 
 
 export default function Breakdown({ categoriesSum, isMobile }) {
+	const userEmail = localStorage.getItem("userEmail");
 	const user = localStorage.getItem("user");
-	console.log(user)
+	console.log(userEmail)
+	const userDetails = { user, userEmail}
 	const handlePdf = function(){
-	createPdf(user);
+	createPdf(userDetails);
 	}
 
 	return (

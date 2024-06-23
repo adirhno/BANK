@@ -38,8 +38,12 @@ class BreakdownController {
 	}
 
 	async createPdf(req, res) {
-
+		
 		try {
+
+			const userTransactions = await User.findOne({email: `${req.body.userDetails.userEmail}`}).select("transactions").populate("transactions");
+			
+			console.log(userTransactions)
 			const fileName = "test";
 			// const __filename = fileURLToPath(import.meta.url);
 			// const __dirname = dirname(__filename);
@@ -60,8 +64,8 @@ class BreakdownController {
 				`inline; filename=${fileName}`
 			);
 		
-			buildPDF(pdfDoc, req.body.client);
-			pdfDoc.pipe(fs.createWriteStream('output.pdf'));
+			buildPDF(pdfDoc, req.body.userDetails.user,userTransactions.transactions );
+			pdfDoc.pipe(fs.createWriteStream('transactions.pdf'));
 			pdfDoc.save()
 			// pdfDoc.pipe(fs.createWriteStream(filePath)); // save copy on the server: optional
 			
