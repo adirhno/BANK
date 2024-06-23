@@ -1,4 +1,4 @@
-const { calculateCategoryAmount } = require("../config");
+const { calculateCategoryAmount, transporter } = require("../config");
 const User = require("../models/User");
 
 class BreakdownController {
@@ -31,6 +31,24 @@ class BreakdownController {
 			res.send(categoriesArr);
 		} catch (err) {
 			console.log(err);
+		}
+	}
+
+	async sendEmail(req, res) {
+		// const { name, email, sub, text } = req.body;
+		try{
+			const info = {
+			from: "adir",
+			to: "adirhno@gmail.com",
+			subject: "sa",
+			text: "ds",
+		};
+
+		const transporter = transporter;
+		transporter.sendMail(info);
+
+		} catch (err){
+			console.log(err)
 		}
 	}
 }
