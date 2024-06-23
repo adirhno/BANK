@@ -1,6 +1,5 @@
 const { default: axios } = require("axios");
-const API = "https://bank-g61v.onrender.com";
-const nodemailer = require("nodemailer");
+const API = "http://localhost:3001";
 
 const calculateCategoryAmount = function (category) {
 	let sum = 0;
@@ -18,17 +17,8 @@ const calculateBalance = function (allCategories) {
 	return sum;
 };
 
-const transporter = nodemailer.createTransport({
-      service: "gmail",
-      host: "adir.hino92@gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: "adirhno@gmail.com",
-        pass: "gabx-ghcn-khxm-ylqg",
-      },
-    });
 
 
 
-module.exports = { calculateCategoryAmount, calculateBalance, API, transporter };
+
+module.exports = { calculateCategoryAmount, calculateBalance, API };
