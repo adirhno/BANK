@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 	//  "mongodb://localhost:27017/bank"
 	.then(() => console.log("conneted to DB"))
 	.catch((err) => console.log(err));
-app.use(cors({ origin: `https://bank-transactions-xjkk.onrender.com`,credentials: true}))
+app.use(cors({ origin: `http://localhost:3000`,credentials: true}))
 
 
 app.use(function (req, res, next) {
