@@ -11,28 +11,48 @@ class Mailer {
 				user: "adirhno@gmail.com",
 				pass: "xbxvyrnfjuuumakd",
 			},
-            tls: { ciphers: 'SSLv3' }
-           
+			tls: { ciphers: "SSLv3" },
 		});
 		return transporter;
 	}
 
-	static async sendEmail( email, sub, text) {
-        let vendor = "";
-        for(let i in text){
-            vendor += "vendor:  ";
-            vendor += text[i].name;
-            vendor += "  sum: ";
-            vendor += text[i].sum
-        }
+	static async sendEmail(email, balance, sub, content) {
+		let message =
+			'<table style="border: 1px solid #333; border-spacing: 15px; margin-left: 50px; font-size: 20px">' +
+			"<thead>" +
+			"<th style='margin-left: 50px;'> Vendor </th>" +
+			"<th>  </th>" +
+			"<th> sum </th>" +
+			"</thead>";
+
+		for (let i in content) {
+			message +=
+				"<tr>" +
+				"<td>" +
+				`${content[i].name} ` +
+				"</td>" +
+				"<td>   </td>" +
+				"<td>" +
+				`${content[i].sum} ` +
+				"</td>" +
+				"</tr>";
+		}
+
+		message += "</table>";
+		message +=`<br></br><span style='margin-left: 50px; font-size: 20px;'><strong>Current Balance: </strong>${balance}ש״ח</span>`;
+
+
 		const info = {
 			to: email,
 			subject: sub,
-			text: vendor,
+			html: message,
 		};
-        console.log(vendor)
 		const transporter = this.Transporter();
-		transporter.sendMail(info, (response)=>{if(response.error){console.log(response.error)}})
+		transporter.sendMail(info, (response) => {
+			if (response.error) {
+				console.log(response.error);
+			}
+		});
 	}
 }
 
