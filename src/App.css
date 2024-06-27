@@ -399,3 +399,8 @@ a {
 	font-weight: bold;
 	margin-bottom: 12px;
 }
+
+.sendToMail{
+	font-size: 17px;
+	margin-left: 80px;
+}

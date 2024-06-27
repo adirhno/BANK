@@ -105,7 +105,7 @@ function App() {
 		{auth?  (<Routes>
 					<Route path='/transactions' element={<Transactions isMobile={isMobile} currUser={currUser} setData={setData} fetchData={fetchData} transactions={data} />} />
 					<Route path='/operations' element={ <Operations currUser={currUser} balance={balance} fetchData={fetchData} setBalance={setBalance} />} />
-					<Route path='/breakdown' element={<Breakdown isMobile={isMobile} categoriesSum={categoriesSum} />} />
+					<Route path='/breakdown' element={<Breakdown isMobile={isMobile} balance={balance} categoriesSum={categoriesSum} />} />
 					<Route path='/userDetails' element={<UserDetails />} />
 				</Routes>) : <Landing isMobile={isMobile} setAuth={setAuth} isLoading={isLoading} setIsLoading={setIsLoading} fetchCategoriesSum={fetchCategoriesSum} initBalance={initBalance} fetchData={fetchData} setCurrUser={setCurrUser}/>}
 		<Footer />

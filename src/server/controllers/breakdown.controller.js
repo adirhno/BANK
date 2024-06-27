@@ -36,10 +36,10 @@ class BreakdownController {
 	}
 
 	async sendEmail(req, res) {
-		const { email, sub, text } = req.body;
+		const { email, balance, sub, content } = req.body;
 
 		try {
-			mailer.sendEmail(email, sub, text).then(()=>{console.log("email sent")})
+			mailer.sendEmail(email, balance, sub, content).then(()=>{console.log("email sent")})
 			res.sendStatus(201);
 		} catch (err) {
 			console.log(err);
