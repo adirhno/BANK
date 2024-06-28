@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Snackbar } from "@material/react-snackbar";
 import "@material/react-snackbar/dist/snackbar.css";
 import { updateUserDetails } from "../apiManager";
+import axios from "axios";
+import { API } from "../server/config";
 
 export default function UserDetails() {
 	const [snackbarStatus, setSnackbarStatus] = useState("");
@@ -36,7 +38,7 @@ export default function UserDetails() {
 		setTimeout(setSnackbarStatus(""), 4000);
 		if(userName == "") setUserName(user)
         updateUserDetails({userName: userName == ""? user: userName, currPassword, newPassword, userEmail:email})
-        .then((e)=> {if(e.status == 200){setSnackbarStatus("details updated"); resetValues(); console.log(e.data.userName);localStorage.setItem("user", e.data.userName)} })
+        .then((e)=> {if(e.status == 200){setSnackbarStatus("details updated"); axios.get(`${API}/user/${email}`) ;resetValues(); console.log(e.data.userName);localStorage.setItem("user", e.data.userName)} })
 		.catch((e)=> {if(e.response.status == 401){ setSnackbarStatus(e.response.data)}})
     }
 

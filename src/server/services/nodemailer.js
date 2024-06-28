@@ -16,6 +16,22 @@ class Mailer {
 		return transporter;
 	}
 
+	static async authEmail(email) {
+		const info = {
+			to: email,
+			subject: "My Bank",
+			text: "Your password successfully changed.",
+		};
+
+		const transporter = this.Transporter();
+		transporter.sendMail(info, (response) => {
+			if (response.error) {
+				console.log(response.error);
+			}
+		});
+
+	}
+
 	static async sendEmail(email, balance, sub, content) {
 		let message =
 			'<table style="border: 1px solid #333; border-spacing: 15px; margin-left: 50px; font-size: 20px">' +

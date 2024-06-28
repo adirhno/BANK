@@ -4,10 +4,13 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const passwordValidator = require("password-validator");
+const { default: axios } = require("axios");
+const { API } = require("../config");
+const Mailer = require("../services/nodemailer");
 const passwordValidatorSchema = new passwordValidator();
 
 class UserController {
-	async updateUserDetails(req, res) {
+		async updateUserDetails(req, res) {
 		const { userName, currPassword, newPassword, userEmail } = req.body;
 		passwordValidatorSchema.has().not().spaces().is().min(8);
         
@@ -36,6 +39,18 @@ class UserController {
                 res.sendStatus(400);
             }
             
+		}
+	}
+
+	async authEmail(req, res) {
+		const email = req.params.email;
+
+		try {
+			Mailer.authEmail(email).then(() => {
+				console.log("email sent");
+			});
+		} catch (error) {
+			console.log(error);
 		}
 	}
 }
